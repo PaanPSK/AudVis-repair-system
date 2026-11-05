@@ -11,6 +11,7 @@
 
   <button onclick="testAPI()">Test API</button>
   <button onclick="testSubmitRepair()">Test Submit Repair</button>
+  <button onclick="testGetRepairRecords()">Test Get Repair Records</button>
 
   <pre id="result">รอทดสอบ...</pre>
 
@@ -36,14 +37,14 @@
       }
     }
 
-    // ทดสอบการเชื่อมต่อ API
+    // 1. ทดสอบการเชื่อมต่อ API
     function testAPI() {
       sendRequest({
         action: "ping"
       });
     }
 
-    // ทดสอบส่งข้อมูลแจ้งซ่อม
+    // 2. ทดสอบส่งข้อมูลแจ้งซ่อม
     function testSubmitRepair() {
       sendRequest({
         action: "submitRepair",
@@ -54,6 +55,13 @@
         urgency: "ปกติ",
         assetNumber: "TEST-001",
         reporterEmail: "0931707608parn@gmail.com"
+      });
+    }
+
+    // 3. ทดสอบดึงรายการแจ้งซ่อม
+    function testGetRepairRecords() {
+      sendRequest({
+        action: "getRepairRecords"
       });
     }
   </script>
