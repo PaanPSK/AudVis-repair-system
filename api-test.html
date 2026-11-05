@@ -1,34 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AudVis API Test</title>
 </head>
 <body>
   <h1>AudVis Repair API Test</h1>
+
   <button onclick="testAPI()">Test API</button>
-  <p id="result">รอทดสอบ...</p>
+  <button onclick="testSubmitRepair()">Test Submit Repair</button>
+
+  <pre id="result">รอทดสอบ...</pre>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxuu9sUCVvHv1EJY_RjGbb7C5rhFWeT-ajobHmRjjccUgu5A1dMgIZcyU_GODsO5tC8VA/exec";
 
-    async function testAPI() {
+    async function sendRequest(payload) {
       const result = document.getElementById("result");
       result.textContent = "กำลังทดสอบ...";
 
       try {
         const response = await fetch(API_URL, {
           method: "POST",
-          body: JSON.stringify({ action: "ping" })
+          body: JSON.stringify(payload)
         });
 
         const data = await response.json();
-        result.textContent = JSON.stringify(data);
+        result.textContent = JSON.stringify(data, null, 2);
 
       } catch (error) {
         result.textContent = "Error: " + error.message;
         console.error(error);
       }
+    }
+
+    // ทดสอบการเชื่อมต่อ API
+    function testAPI() {
+      sendRequest({
+        action: "ping"
+      });
+    }
+
+    // ทดสอบส่งข้อมูลแจ้งซ่อม
+    function testSubmitRepair() {
+      sendRequest({
+        action: "submitRepair",
+        name: "TEST API",
+        room: "TEST ROOM",
+        equipment: "TEST PROJECTOR",
+        problem: "ทดสอบระบบ API เท่านั้น ไม่ใช่รายการแจ้งซ่อมจริง",
+        urgency: "ปกติ",
+        assetNumber: "TEST-001",
+        reporterEmail: "0931707608parn@gmail.com"
+      });
     }
   </script>
 </body>
