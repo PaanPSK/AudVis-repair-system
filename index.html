@@ -718,75 +718,108 @@ section
 
 main
 script
+
+
+const API_URL = "https://script.google.com/macros/s/AKfycbxuu9sUCVvHv1EJY_RjGbb7C5rhFWeT-ajobHmRjjccUgu5A1dMgIZcyU_GODsO5tC8VA/exec";
+
+// ฟังก์ชันกลางสำหรับส่งคำขอไปยัง API
+async function callRepairAPI(payload) {
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error('HTTP Error: ' + response.status);
+  }
+
+  return result;
+}
+
+let isSubmitting = false;
+
+
   let isSubmitting = false;
-  function handleSubmit(event) {
+  
+async function handleSubmit(event) {
   event.preventDefault();
 
-  if (isSubmitting) {
-    return;
-  }
+  if (isSubmitting) return;
+
+  const form = document.getElementById('nameForm');
+
+  if (!form.reportValidity()) return;
 
   isSubmitting = true;
 
-    const form = document.getElementById('nameForm');
-  
-  if (!form.reportValidity()) {
-  isSubmitting = false;
-  return;
-}
-    const button = document.getElementById('submitBtn');
-    const message = document.getElementById('message');
-    const name = document.getElementById('reporterName').value;
-    const room = document.getElementById('room').value;
-    const equipment = document.getElementById('equipment').value;
-    const assetNumber = document.getElementById('assetNumber').value;
-    const reporterEmail = document.getElementById('reporterEmail').value;
-    const problem = document.getElementById('problem').value;
-    const urgency = document.getElementById('urgency').value;
+  const button = document.getElementById('submitBtn');
+  const message = document.getElementById('message');
 
-    button.disabled = true;
-    message.textContent = 'กำลังบันทึกข้อมูล...';
+  const name = document.getElementById('reporterName').value;
+  const room = document.getElementById('room').value;
+  const equipment = document.getElementById('equipment').value;
+  const assetNumber = document.getElementById('assetNumber').value;
+  const reporterEmail = document.getElementById('reporterEmail').value;
+  const problem = document.getElementById('problem').value;
+  const urgency = document.getElementById('urgency').value;
 
-    google.script.run
-      .withSuccessHandler(function(result) {
-        message.className = 'success';
-        message.textContent =
-          result.message +
-          ' เลขรับแจ้ง ' + result.repairId +
-          '  ' + (result.emailNotification  '');
+  button.disabled = true;
+  message.className = '';
+  message.textContent = 'กำลังบันทึกข้อมูล...';
 
-        form.reset();
+  try {
+    const result = await callRepairAPI({
+      action: 'submitRepair',
+      name: name,
+      room: room,
+      equipment: equipment,
+      problem: problem,
+      urgency: urgency,
+      assetNumber: assetNumber,
+      reporterEmail: reporterEmail
+    });
 
-         โหลดรายการแจ้งซ่อมใหม่หลังบันทึกสำเร็จ
-        recordsLoaded = false;
-        loadRepairRecords();
+    if (!result.success) {
+      throw new Error(result.message || 'ไม่สามารถบันทึกข้อมูลได้');
+    }
 
-        isSubmitting = false;
-        button.disabled = false;
-})
-      .withFailureHandler(function(error) {
-        message.className = 'error';
-        message.textContent =
-          'บันทึกไม่สำเร็จ ' + error.message;
-        
-        isSubmitting = false;
-        button.disabled = false;
-})
-      .submitTestName(name, room, equipment, problem, urgency, assetNumber, reporterEmail);
+    message.className = 'success';
+    message.textContent =
+      result.message +
+      ' เลขรับแจ้ง ' + result.repairId +
+      ' ' + (result.emailNotification || '');
+
+    form.reset();
+
+    // โหลดรายการแจ้งซ่อมใหม่หลังบันทึกสำเร็จ
+    recordsLoaded = false;
+    await loadRepairRecords();
+
+  } catch (error) {
+    message.className = 'error';
+    message.textContent = 'บันทึกไม่สำเร็จ: ' + error.message;
+
+  } finally {
+    isSubmitting = false;
+    button.disabled = false;
   }
+}
   
 
 let allRepairRecords = [];
 let recordsLoaded = false;
 let isLoadingRecords = false;
 
-function loadRepairRecords() {
+
+async function loadRepairRecords() {
   const message = document.getElementById('recordsMessage');
 
-   ถ้ากำลังโหลดอยู่ ไม่เรียกซ้ำ
+  // ถ้ากำลังโหลดอยู่ ไม่เรียกซ้ำ
   if (isLoadingRecords) return;
 
-   ถ้าโหลดข้อมูลไว้แล้ว ใช้ข้อมูลเดิมได้เลย
+  // ถ้าโหลดข้อมูลไว้แล้ว ใช้ข้อมูลเดิมได้เลย
   if (recordsLoaded) {
     renderRepairRecords();
     return;
@@ -796,23 +829,33 @@ function loadRepairRecords() {
   message.className = '';
   message.textContent = 'กำลังโหลดรายการแจ้งซ่อม...';
 
-  google.script.run
-    .withSuccessHandler(function(records) {
-      isLoadingRecords = false;
-      recordsLoaded = true;
-      allRepairRecords = Array.isArray(records)  records  [];
+  try {
+    const result = await callRepairAPI({
+      action: 'getRepairRecords'
+    });
 
-      renderRepairRecords();
-    })
-    .withFailureHandler(function(error) {
-      isLoadingRecords = false;
-      recordsLoaded = false;
-      message.className = 'error';
-      message.textContent =
-        'โหลดข้อมูลไม่สำเร็จ ' + error.message;
-    })
-    .getRepairRecords();
+    if (!result.success) {
+      throw new Error(result.message || 'ไม่สามารถโหลดข้อมูลได้');
+    }
+
+    allRepairRecords = Array.isArray(result.records)
+      ? result.records
+      : [];
+
+    recordsLoaded = true;
+    renderRepairRecords();
+
+  } catch (error) {
+    recordsLoaded = false;
+    message.className = 'error';
+    message.textContent =
+      'โหลดข้อมูลไม่สำเร็จ: ' + error.message;
+
+  } finally {
+    isLoadingRecords = false;
+  }
 }
+
 
 function renderRepairRecords() {
   const message = document.getElementById('recordsMessage');
@@ -1040,8 +1083,9 @@ document.getElementById('clearSearchBtn')
     searchInput.focus();
   });
 
+
 document.getElementById('searchAssetHistoryBtn')
-  .addEventListener('click', function() {
+  .addEventListener('click', async function() {
 
     const assetNumber = document
       .getElementById('assetHistoryInput')
@@ -1063,66 +1107,75 @@ document.getElementById('searchAssetHistoryBtn')
     button.textContent = 'กำลังค้นหา...';
     message.textContent = 'กำลังค้นหาประวัติการซ่อม...';
 
-    google.script.run
-      .withSuccessHandler(function(records) {
+    try {
+      const result = await callRepairAPI({
+        action: 'getRepairHistory',
+        assetNumber: assetNumber
+      });
 
-        button.disabled = false;
-        button.textContent = 'ค้นหาประวัติ';
+      if (!result.success) {
+        throw new Error(result.message || 'ไม่สามารถค้นหาประวัติได้');
+      }
 
-        if (!records  records.length === 0) {
-          message.textContent = 'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
-          return;
-        }
+      const records = Array.isArray(result.records)
+        ? result.records
+        : [];
 
-        message.textContent =
-          'พบประวัติการซ่อมทั้งหมด ' + records.length + ' รายการ';
+      if (records.length === 0) {
+        message.textContent = 'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
+        return;
+      }
 
-        records.forEach(function(record) {
-          const item = document.createElement('div');
-          item.className = 'repair-item';
+      message.textContent =
+        'พบประวัติการซ่อมทั้งหมด ' + records.length + ' รายการ';
 
-const title = document.createElement('h3');
-title.textContent = record.repairId;
+      records.forEach(function(record) {
+        const item = document.createElement('div');
+        item.className = 'repair-item';
 
-const date = document.createElement('p');
-date.textContent = 'วันที่แจ้ง ' + record.reportedAt;
+        const title = document.createElement('h3');
+        title.textContent = record.repairId;
 
-const reporter = document.createElement('p');
-reporter.textContent = 'ผู้แจ้ง ' + record.reporterName;
+        const date = document.createElement('p');
+        date.textContent = 'วันที่แจ้ง ' + record.reportedAt;
 
-const assetNumber = document.createElement('p');
-assetNumber.textContent = 'หมายเลขครุภัณฑ์ ' + (record.assetNumber  '-');
+        const reporter = document.createElement('p');
+        reporter.textContent = 'ผู้แจ้ง ' + record.reporterName;
 
-const equipment = document.createElement('p');
-equipment.textContent = 'อุปกรณ์ ' + record.equipment;
+        const assetNumber = document.createElement('p');
+        assetNumber.textContent = 'หมายเลขครุภัณฑ์ ' + (record.assetNumber || '-');
 
-const problem = document.createElement('p');
-problem.textContent = 'อาการ ' + record.problem;
+        const equipment = document.createElement('p');
+        equipment.textContent = 'อุปกรณ์ ' + record.equipment;
 
-const status = document.createElement('p');
-status.textContent = 'สถานะ ' + record.status;
+        const problem = document.createElement('p');
+        problem.textContent = 'อาการ ' + record.problem;
 
-item.appendChild(title);
-item.appendChild(date);
-item.appendChild(reporter);
-item.appendChild(assetNumber);
-item.appendChild(equipment);
-item.appendChild(problem);
-item.appendChild(status);
+        const status = document.createElement('p');
+        status.textContent = 'สถานะ ' + record.status;
 
-historyList.appendChild(item);
-        });
-      })
-      .withFailureHandler(function(error) {
+        item.append(
+          title,
+          date,
+          reporter,
+          assetNumber,
+          equipment,
+          problem,
+          status
+        );
 
-        button.disabled = false;
-        button.textContent = 'ค้นหาประวัติ';
+        historyList.appendChild(item);
+      });
 
-        message.textContent =
-          'ค้นหาประวัติไม่สำเร็จ ' + error.message;
-      })
-      .getRepairHistoryByAssetNumber(assetNumber);
+    } catch (error) {
+      message.textContent = 'ค้นหาประวัติไม่สำเร็จ: ' + error.message;
+
+    } finally {
+      button.disabled = false;
+      button.textContent = 'ค้นหาประวัติ';
+    }
   });
+
 
  เปิด-ปิดรายการแจ้งซ่อมล่าสุด
 document.getElementById('toggleRecordsBtn')
