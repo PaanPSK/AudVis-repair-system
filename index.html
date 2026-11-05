@@ -1,726 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-!DOCTYPE html
-html
-head
-  base target=_top
-  meta charset=UTF-8
-  meta name=viewport content=width=device-width, initial-scale=1
-
-  style
+  <style>
     body {
-      font-family Arial, sans-serif;
-      background #f1f5f9;
-      color #263445;
-      margin 0;
-      padding 32px 16px;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #263445;
+      margin: 0;
+      padding: 32px 16px;
     }
 
     .card {
-      max-width 560px;
-      margin 0 auto;
-      padding 28px;
-      background white;
-      border-radius 16px;
-      box-shadow 0 4px 16px #00000010;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 28px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px #00000010;
     }
 
     h1 {
-      color #176b67;
-      font-size 25px;
+      color: #176b67;
+      font-size: 25px;
     }
 
     p {
-      line-height 1.7;
-      color #64748b;
+      line-height: 1.7;
+      color: #64748b;
     }
     label {
-      display block;
-      margin-bottom 8px;
-      font-weight bold;
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
     }
 
     input {
-      box-sizing border-box;
-      width 100%;
-      padding 12px;
-      border 1px solid #cbd5e1;
-      border-radius 8px;
-      font-size 16px;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
     }
     button {
-      margin-top 16px;
-      padding 12px 20px;
-      border none;
-      border-radius 8px;
-      background #176b67;
-      color white;
-      font-size 16px;
-      cursor pointer;
+      margin-top: 16px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #176b67;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
     }
 
-    buttondisabled {
-      opacity 0.6;
-      cursor wait;
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
     }    
     textarea {
-      box-sizing border-box;
-      width 100%;
-      padding 12px;
-      border 1px solid #cbd5e1;
-      border-radius 8px;
-      font-size 16px;
-      font-family inherit;
-      resize vertical;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      resize: vertical;
     }
     select {
-      box-sizing border-box;
-      width 100%;
-      padding 12px;
-      border 1px solid #cbd5e1;
-      border-radius 8px;
-      font-size 16px;
-      font-family inherit;
-      background white;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      background: white;
     }
 #message {
-  margin-top 16px;
-  padding 12px;
-  border-radius 8px;
-  overflow-wrap anywhere;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
 }
 
-#messageempty {
-  display none;
+#message:empty {
+  display: none;
 }
 
 #message.success {
-  color #166534;
-  background #dcfce7;
+  color: #166534;
+  background: #dcfce7;
 }
 
 #message.error {
-  color #991b1b;
-  background #fee2e2;
+  color: #991b1b;
+  background: #fee2e2;
 }
 
- พื้นที่รายการแจ้งซ่อม 
+/* พื้นที่รายการแจ้งซ่อม */
 #recordsSection {
-  margin-top 0;
+  margin-top: 0;
 }
 
 #recordsSection h2 {
-  margin-bottom 12px;
-  color #1f2937;
-  font-size 20px;
+  margin-bottom: 12px;
+  color: #1f2937;
+  font-size: 20px;
 }
 
 .records-header {
-  display flex;
-  align-items center;
-  justify-content space-between;
-  gap 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .records-header h2 {
-  margin 0;
+  margin: 0;
 }
 
 #toggleRecordsBtn {
-  display inline-flex;
-  align-items center;
-  justify-content center;
-  gap 12px;
-  width 210px;
-  min-height 46px;
-  box-sizing border-box;
-  margin-top 0;
-  padding 10px 18px;
-  border 1px solid #176D68;
-  border-radius 8px;
-  background #176D68;
-  color #FFFFFF;
-  font-family inherit;
-  font-size 16px;
-  font-weight 500;
-  cursor pointer;
-  transition background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 210px;
+  min-height: 46px;
+  box-sizing: border-box;
+  margin-top: 0;
+  padding: 10px 18px;
+  border: 1px solid #176D68;
+  border-radius: 8px;
+  background: #176D68;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-#toggleRecordsBtnhover {
-  background #125752;
+#toggleRecordsBtn:hover {
+  background: #125752;
 }
 
 #toggleRecordsIcon {
-  font-size 12px;
-  transition transform 0.2s ease;
+  font-size: 12px;
+  transition: transform 0.2s ease;
 }
 
-#toggleRecordsBtn[aria-expanded=true] #toggleRecordsIcon {
-  transform rotate(180deg);
+#toggleRecordsBtn[aria-expanded="true"] #toggleRecordsIcon {
+  transform: rotate(180deg);
 }
 
 .section-description {
-  margin-top 5px;
-  margin-bottom 5px;
-  color #64748b;
-  font-size 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 16px;
 }
 
 hr {
-  margin-top 24px;
-  margin-bottom 15px;
-  border 0;
-  border-top 2px solid #94a3b8;
+  margin-top: 24px;
+  margin-bottom: 15px;
+  border: 0;
+  border-top: 2px solid #94a3b8;
 }
 
- ปุ่มดูรายการ 
+/* ปุ่มดูรายการ */
 #loadRecordsBtn {
-  padding 10px 18px;
-  border none;
-  border-radius 8px;
-  background #2563eb;
-  color white;
-  font-size 14px;
-  cursor pointer;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-#loadRecordsBtnhover {
-  background #1d4ed8;
+#loadRecordsBtn:hover {
+  background: #1d4ed8;
 }
 
-#loadRecordsBtndisabled {
-  opacity 0.6;
-  cursor not-allowed;
+#loadRecordsBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
- กล่องรายการทั้งหมด 
+/* กล่องรายการทั้งหมด */
 #recordsList {
-  display grid;
-  gap 16px;
-  margin-top 16px;
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
 }
 
 .repair-item {
-  padding 20px;
-  border 1px solid #dbe7e6;
-  border-radius 14px;
-  background #ffffff;
-  box-shadow 0 3px 10px rgba(23, 107, 103, 0.06);
-  overflow-wrap anywhere;
-  transition box-shadow 0.2s ease, border-color 0.2s ease;
+  padding: 20px;
+  border: 1px solid #dbe7e6;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(23, 107, 103, 0.06);
+  overflow-wrap: anywhere;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.repair-itemhover {
-  border-color #a8cfcb;
-  box-shadow 0 5px 14px rgba(23, 107, 103, 0.10);
+.repair-item:hover {
+  border-color: #a8cfcb;
+  box-shadow: 0 5px 14px rgba(23, 107, 103, 0.10);
 }
 
 .repair-item h3 {
-  margin 0 0 16px;
-  padding-bottom 12px;
-  border-bottom 1px solid #A8CFCA;
-  color #176b67;
-  font-size 17px;
-  line-height 1.5;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #A8CFCA;
+  color: #176b67;
+  font-size: 17px;
+  line-height: 1.5;
 }
 
 .repair-item p {
-  margin 10px 0;
-  color #475569;
-  font-size 14px;
-  line-height 1.7;
+  margin: 10px 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
- รายละเอียดปัญหา 
+/* รายละเอียดปัญหา */
 .repair-item .repair-problem {
-  margin-top 14px;
-  padding 12px 14px;
-  border-left 3px solid #A8CFCA;
-  border-radius 6px;
-  background #F4FAF9;
-  color #334155;
-  overflow-wrap anywhere;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid #A8CFCA;
+  border-radius: 6px;
+  background: #F4FAF9;
+  color: #334155;
+  overflow-wrap: anywhere;
 }
 
 #assetHistoryList .repair-item {
-  margin-bottom 16px;
+  margin-bottom: 16px;
 }
 
- ข้อความแจ้งผลการเปลี่ยนสถานะ 
-.status-messageempty {
-  display none;
+/* ข้อความแจ้งผลการเปลี่ยนสถานะ */
+.status-message:empty {
+  display: none;
 }
 
 .status-message {
-  margin 8px 0 0;
-  padding 10px 12px;
-  border-left 3px solid #A8CFCA;
-  border-radius 6px;
-  background #F4FAF9;
-  color #176D68;
-  font-size 14px;
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid #A8CFCA;
+  border-radius: 6px;
+  background: #F4FAF9;
+  color: #176D68;
+  font-size: 14px;
 }
 
- ข้อความแจ้งผล 
+/* ข้อความแจ้งผล */
 #recordsMessage {
-  margin 12px 0;
-  font-size 14px;
+  margin: 12px 0;
+  font-size: 14px;
 }
 
 #recordsMessage.error {
-  color #dc2626;
+  color: #dc2626;
 }
 
- ป้ายสถานะ 
+/* ป้ายสถานะ */
 .status-label,
 .urgency-label {
-  display inline-block;
-  width fit-content;
-  padding 5px 10px;
-  border-radius 6px;
-  font-size 13px;
-  font-weight 600;
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
- สถานะ รับเรื่องแล้ว 
+/* สถานะ: รับเรื่องแล้ว */
 .status-label {
-  color #176D68;
-  background #E5F3F1;
-  border 1px solid #A8CFCA;
+  color: #176D68;
+  background: #E5F3F1;
+  border: 1px solid #A8CFCA;
 }
 
- รอดำเนินการ 
+/* รอดำเนินการ */
 .status-label.pending {
-  color #92400e;
-  background #fef3c7;
-  border 1px solid #fcd34d;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
 }
 
- กำลังซ่อม 
+/* กำลังซ่อม */
 .status-label.in-progress {
-  color #1d4ed8;
-  background #dbeafe;
-  border 1px solid #93c5fd;
+  color: #1d4ed8;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
 }
 
- ซ่อมเสร็จแล้ว 
+/* ซ่อมเสร็จแล้ว */
 .status-label.completed {
-  color #166534;
-  background #dcfce7;
-  border 1px solid #86efac;
+  color: #166534;
+  background: #dcfce7;
+  border: 1px solid #86efac;
 }
 
- ความเร่งด่วน ปกติ 
+/* ความเร่งด่วน: ปกติ */
 .urgency-label {
-  color #475569;
-  background #f1f5f9;
+  color: #475569;
+  background: #f1f5f9;
 }
 
- ความเร่งด่วน เร่งด่วน 
+/* ความเร่งด่วน: เร่งด่วน */
 .urgency-label.urgent {
-  color #92400e;
-  background #fef3c7;
+  color: #92400e;
+  background: #fef3c7;
 }
 
- ความเร่งด่วน เร่งด่วนมาก 
+/* ความเร่งด่วน: เร่งด่วนมาก */
 .urgency-label.very-urgent {
-  color #b91c1c;
-  background #fee2e2;
+  color: #b91c1c;
+  background: #fee2e2;
 }
 
- พื้นที่จัดการสถานะ 
+/* พื้นที่จัดการสถานะ */
 .status-control {
-  display flex;
-  align-items center;
-  flex-wrap wrap;
-  gap 10px;
-  margin-top 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
 }
 
- ช่องเลือกสถานะ 
+/* ช่องเลือกสถานะ */
 .status-select {
-  width auto;
-  min-width 160px;
-  padding 9px 12px;
-  border 1px solid #cbd5e1;
-  border-radius 8px;
-  background #ffffff;
-  color #263445;
-  font-size 14px;
-  font-family inherit;
+  width: auto;
+  min-width: 160px;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #263445;
+  font-size: 14px;
+  font-family: inherit;
 }
 
- ปุ่มบันทึกสถานะ 
+/* ปุ่มบันทึกสถานะ */
 .status-save-btn {
-  min-height 40px;
-  margin-top 0;
-  padding 9px 16px;
-  border 1px solid #176D68;
-  border-radius 8px;
-  background #176D68;
-  color #ffffff;
-  font-family inherit;
-  font-size 14px;
-  font-weight 400;
-  cursor pointer;
+  min-height: 40px;
+  margin-top: 0;
+  padding: 9px 16px;
+  border: 1px solid #176D68;
+  border-radius: 8px;
+  background: #176D68;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
 }
 
-.status-save-btnhover {
-  background #125752;
+.status-save-btn:hover {
+  background: #125752;
 }
 
-.status-save-btndisabled,
-.status-selectdisabled {
-  opacity 0.6;
-  cursor not-allowed;
+.status-save-btn:disabled,
+.status-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
- มือถือ 
-@media (max-width 600px) {
+/* มือถือ */
+@media (max-width: 600px) {
   .status-control {
-    flex-direction column;
-    align-items stretch;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .status-select,
   .status-save-btn {
-    width 100%;
-    box-sizing border-box;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
- รูปแบบพื้นฐานของปุ่ม 
+/* รูปแบบพื้นฐานของปุ่ม */
 #submitBtn,
 #loadRecordsBtn,
 #clearSearchBtn {
-  display inline-flex;
-  align-items center;
-  justify-content center;
-  min-height 44px;
-  box-sizing border-box;
-  padding 10px 18px;
-  border-radius 8px;
-  font-family inherit;
-  font-size 16px;
-  font-weight 400;
-  line-height 1.4;
-  cursor pointer;
-  transition background-color 0.2s ease,
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease,
               border-color 0.2s ease;
 }
 
- ปุ่มหลัก ส่งข้อมูลและดูรายการ 
+/* ปุ่มหลัก: ส่งข้อมูลและดูรายการ */
 #submitBtn,
 #loadRecordsBtn {
-  border 1px solid #176D68;
-  background #176D68;
-  color #FFFFFF;
+  border: 1px solid #176D68;
+  background: #176D68;
+  color: #FFFFFF;
 }
 
-#submitBtnhover,
-#loadRecordsBtnhover {
-  background #125752;
-  border-color #125752;
+#submitBtn:hover,
+#loadRecordsBtn:hover {
+  background: #125752;
+  border-color: #125752;
 }
 
- ปุ่มรอง ล้างคำค้นหา 
+/* ปุ่มรอง: ล้างคำค้นหา */
 #clearSearchBtn {
-  border 1px solid #B8DCD8;
-  background #E5F3F1;
-  color #176D68;
+  border: 1px solid #B8DCD8;
+  background: #E5F3F1;
+  color: #176D68;
 }
 
-#clearSearchBtnhover {
-  background #D2EAE6;
-  border-color #8FC7C0;
+#clearSearchBtn:hover {
+  background: #D2EAE6;
+  border-color: #8FC7C0;
 }
 
- สถานะโฟกัสสำหรับการใช้คีย์บอร์ด 
-#submitBtnfocus-visible,
-#loadRecordsBtnfocus-visible,
-#clearSearchBtnfocus-visible {
-  outline 3px solid #93C5FD;
-  outline-offset 2px;
+/* สถานะโฟกัสสำหรับการใช้คีย์บอร์ด */
+#submitBtn:focus-visible,
+#loadRecordsBtn:focus-visible,
+#clearSearchBtn:focus-visible {
+  outline: 3px solid #93C5FD;
+  outline-offset: 2px;
 }
 
- ปุ่มระหว่างดำเนินการ 
-#submitBtndisabled,
-#loadRecordsBtndisabled,
-#clearSearchBtndisabled {
-  opacity 0.6;
-  cursor not-allowed;
+/* ปุ่มระหว่างดำเนินการ */
+#submitBtn:disabled,
+#loadRecordsBtn:disabled,
+#clearSearchBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
- รองรับหน้าจอมือถือ 
-@media (max-width600px) {
+/* รองรับหน้าจอมือถือ */
+@media (max-width:600px) {
   body {
-    padding 16px 10px;
+    padding: 16px 10px;
   }
 
   .card {
-    padding 20px 16px;
-    border-radius 12px;
+    padding: 20px 16px;
+    border-radius: 12px;
   }
 
   h1 {
-    font-size 22px;
+    font-size: 22px;
   }
 
   .repair-item {
-    padding 16px;
+    padding: 16px;
   }
 
   .repair-item h3 {
-    font-size 16px;
+    font-size: 16px;
   }
 
   .repair-item p {
-    font-size 14px;
+    font-size: 14px;
   }
 }
 
- จัดวางช่องค้นหา 
+/* จัดวางช่องค้นหา */
 .search-box {
-  display flex;
-  align-items stretch;
-  gap 10px;
-  margin-bottom 20px;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .search-box input {
-  flex 1;
-  min-width 0;
+  flex: 1;
+  min-width: 0;
 }
 
- ปุ่มล้างคำค้นหา 
+/* ปุ่มล้างคำค้นหา */
 #clearSearchBtn {
-  flex-shrink 0;
-  margin-top 0;
+  flex-shrink: 0;
+  margin-top: 0;
 }
 
- ปรับแถวค้นหาบนมือถือ 
-@media (max-width 600px) {
+/* ปรับแถวค้นหาบนมือถือ */
+@media (max-width: 600px) {
   .search-box {
-    flex-direction column;
-    gap 8px;
+    flex-direction: column;
+    gap: 8px;
   }
 
   #clearSearchBtn {
-    width 100%;
+    width: 100%;
   }
 }
 
 #assetHistoryInput {
-  height 44px;
-  box-sizing border-box;
+  height: 44px;
+  box-sizing: border-box;
 }
 
 #searchAssetHistoryBtn {
-  margin-top 0;
-  min-height 44px;
-  box-sizing border-box;
-  border 1px solid #176D68;
-  background #176D68;
-  color #FFFFFF;
-  transition background-color 0.2s ease,
+  margin-top: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid #176D68;
+  background: #176D68;
+  color: #FFFFFF;
+  transition: background-color 0.2s ease,
               border-color 0.2s ease;
 }
 
-#searchAssetHistoryBtnhover {
-  background #125752;
-  border-color #125752;
+#searchAssetHistoryBtn:hover {
+  background: #125752;
+  border-color: #125752;
 }
 
-#searchAssetHistoryBtnfocus-visible,
-#toggleRecordsBtnfocus-visible {
-  outline 3px solid #93C5FD;
-  outline-offset 2px;
+#searchAssetHistoryBtn:focus-visible,
+#toggleRecordsBtn:focus-visible {
+  outline: 3px solid #93C5FD;
+  outline-offset: 2px;
 }
 
 .required-mark {
-  color #dc2626;
-  font-weight bold;
+  color: #dc2626;
+  font-weight: bold;
 }
 
 .required-note {
-  color #dc2626;
+  color: #dc2626;
 }
 
-  style
-head
-body
-main class=card
-  h1ระบบแจ้งซ่อมอุปกรณ์โสตทัศนศึกษาh1
+  </style>
+</head>
+<body>
+<main class="card">
+  <h1>ระบบแจ้งซ่อมอุปกรณ์โสตทัศนศึกษา</h1>
 
-  pแบบฟอร์มแจ้งปัญหาอุปกรณ์เพื่อให้เจ้าหน้าที่ตรวจสอบและดำเนินการซ่อมp
+  <p>แบบฟอร์มแจ้งปัญหาอุปกรณ์เพื่อให้เจ้าหน้าที่ตรวจสอบและดำเนินการซ่อม</p>
 
-  p class=required-note
-    span class=required-markspan จำเป็นต้องกรอกข้อมูล
-  p
+  <p class="required-note">
+    <span class="required-mark">*</span> จำเป็นต้องกรอกข้อมูล
+  </p>
 
-form id=nameForm onsubmit=handleSubmit(event)
-  label for=reporterName
-    ชื่อผู้แจ้ง span class=required-markspan
-  label
+<form id="nameForm" onsubmit="handleSubmit(event)">
+  <label for="reporterName">
+    ชื่อผู้แจ้ง <span class="required-mark">*</span>
+  </label>
 
-  input
-    type=text
-    id=reporterName
-    name=reporterName
-    placeholder=กรอกชื่อและนามสกุล
-    maxlength=100
+  <input
+    type="text"
+    id="reporterName"
+    name="reporterName"
+    placeholder="กรอกชื่อและนามสกุล"
+    maxlength="100"
     required
-  
+  >
 
-label for=room
-  อาคารห้อง span class=required-markspan
-label
+<label for="room">
+  อาคาร/ห้อง <span class="required-mark">*</span>
+</label>
 
-input
-  type=text
-  id=room
-  name=room
-  placeholder=เช่น อาคารเรียน 2 ห้องประชุม A
-  maxlength=100
+<input
+  type="text"
+  id="room"
+  name="room"
+  placeholder="เช่น อาคารเรียน 2 ห้องประชุม A"
+  maxlength="100"
   required
+>
+<label for="equipment">
+  อุปกรณ์ <span class="required-mark">*</span>
+</label>
 
-label for=equipment
-  อุปกรณ์ span class=required-markspan
-label
-
-input
-  type=text
-  id=equipment
-  name=equipment
-  placeholder=เช่น โปรเจกเตอร์ ไมโครโฟน
-  maxlength=100
+<input
+  type="text"
+  id="equipment"
+  name="equipment"
+  placeholder="เช่น โปรเจกเตอร์ ไมโครโฟน"
+  maxlength="100"
   required
+>
+<label for="assetNumber">หมายเลขครุภัณฑ์ (ถ้ามี)</label>
 
-label for=assetNumberหมายเลขครุภัณฑ์ (ถ้ามี)label
+<input
+  type="text"
+  id="assetNumber"
+  name="assetNumber"
+  placeholder="เช่น 7440-001-0001"
+  maxlength="100"
+>
 
-input
-  type=text
-  id=assetNumber
-  name=assetNumber
-  placeholder=เช่น 7440-001-0001
-  maxlength=100
+<label for="reporterEmail">
+  อีเมลผู้แจ้ง <span class="required-mark">*</span>
+</label>
 
-
-label for=reporterEmail
-  อีเมลผู้แจ้ง span class=required-markspan
-label
-
-input
-  type=email
-  id=reporterEmail
-  name=reporterEmail
-  placeholder=example@email.com
+<input
+  type="email"
+  id="reporterEmail"
+  name="reporterEmail"
+  placeholder="example@email.com"
   required
+>
 
+<label for="problem">
+  รายละเอียดปัญหา <span class="required-mark">*</span>
+</label>
 
-label for=problem
-  รายละเอียดปัญหา span class=required-markspan
-label
-
-textarea
-  id=problem
-  name=problem
-  placeholder=อธิบายอาการเสียหรือปัญหาที่พบ
-  maxlength=1000
-  rows=4
+<textarea
+  id="problem"
+  name="problem"
+  placeholder="อธิบายอาการเสียหรือปัญหาที่พบ"
+  maxlength="1000"
+  rows="4"
   required
-textarea
+></textarea>
 
-label for=urgency
-  ความเร่งด่วน span class=required-markspan
-label
+<label for="urgency">
+  ความเร่งด่วน <span class="required-mark">*</span>
+</label>
 
-select
-  id=urgency
-  name=urgency
+<select
+  id="urgency"
+  name="urgency"
   required
+>
+  <option value="" selected disabled>กรุณาเลือกระดับความเร่งด่วน</option>
+  <option value="ปกติ">ปกติ</option>
+  <option value="เร่งด่วน">เร่งด่วน</option>
+  <option value="เร่งด่วนมาก">เร่งด่วนมาก</option>
+</select>
 
-  option value= selected disabledกรุณาเลือกระดับความเร่งด่วนoption
-  option value=ปกติปกติoption
-  option value=เร่งด่วนเร่งด่วนoption
-  option value=เร่งด่วนมากเร่งด่วนมากoption
-select
-
-  button type=submit id=submitBtn
+  <button type="submit" id="submitBtn">
     ส่งข้อมูลแจ้งซ่อม
-  button
+  </button>
 
-  p id=message role=statusp
-form
+  <p id="message" role="status"></p>
+</form>
 
-hr
+<hr>
 
-section id=recordsSection style=display none;
-  p class=section-description
+<section id="recordsSection" style="display: none;">
+  <p class="section-description">
     ค้นหาและติดตามรายการแจ้งซ่อม รวมถึงตรวจสอบประวัติการซ่อม
-  p
+  </p>
 
-  h2ค้นหารายการแจ้งซ่อมh2
+  <h2>ค้นหารายการแจ้งซ่อม</h2>
 
-  div class=search-box
-    input
-      type=search
-      id=searchInput
-      placeholder=เลขรับแจ้ง ชื่อผู้แจ้ง หรือชื่ออุปกรณ์
-    
+  <div class="search-box">
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="เลขรับแจ้ง ชื่อผู้แจ้ง หรือชื่ออุปกรณ์"
+    >
 
-    button type=button id=clearSearchBtn
+    <button type="button" id="clearSearchBtn">
       ล้างคำค้นหา
-    button
-  div
+    </button>
+  </div>
 
-  h2ประวัติการซ่อมตามหมายเลขครุภัณฑ์h2
+  <h2>ประวัติการซ่อมตามหมายเลขครุภัณฑ์</h2>
 
-  div class=search-box
-    input
-      type=search
-      id=assetHistoryInput
-      placeholder=กรอกหมายเลขครุภัณฑ์
-    
+  <div class="search-box">
+    <input
+      type="search"
+      id="assetHistoryInput"
+      placeholder="กรอกหมายเลขครุภัณฑ์"
+    >
 
-    button
-      type=button
-      id=searchAssetHistoryBtn
-    
+    <button
+      type="button"
+      id="searchAssetHistoryBtn"
+    >
       ค้นหาประวัติ
-    button
-  div
+    </button>
+  </div>
 
-p id=assetHistoryMessage role=statusp
+<p id="assetHistoryMessage" role="status"></p>
 
-div id=assetHistoryListdiv
+<div id="assetHistoryList"></div>
 
-  div class=records-header
-  h2รายการแจ้งซ่อมล่าสุดh2
+  <div class="records-header">
+  <h2>รายการแจ้งซ่อมล่าสุด</h2>
 
-  button
-    type=button
-    id=toggleRecordsBtn
-    aria-expanded=false
+  <button
+    type="button"
+    id="toggleRecordsBtn"
+    aria-expanded="false"
+  >
+    <span id="toggleRecordsText">แสดงรายการ</span>
+    <span id="toggleRecordsIcon" aria-hidden="true">▼</span>
+  </button>
+</div>
+
+  <div id="recordsContent" style="display: none;">
+  <p id="recordsMessage" role="status"></p>
+  <div id="recordsList"></div>
+</div>
   
-    span id=toggleRecordsTextแสดงรายการspan
-    span id=toggleRecordsIcon aria-hidden=true▼span
-  button
-div
+  <hr>
 
-  div id=recordsContent style=display none;
-  p id=recordsMessage role=statusp
-  div id=recordsListdiv
-div
-  
-  hr
+</section>
 
-section
-
-main
-script
-
-
-const API_URL = "https://script.google.com/macros/s/AKfycbxuu9sUCVvHv1EJY_RjGbb7C5rhFWeT-ajobHmRjjccUgu5A1dMgIZcyU_GODsO5tC8VA/exec";
+</main>
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbxuu9sUCVvHv1EJY_RjGbb7C5rhFWeT-ajobHmRjjccUgu5A1dMgIZcyU_GODsO5tC8VA/exec";
 
 // ฟังก์ชันกลางสำหรับส่งคำขอไปยัง API
 async function callRepairAPI(payload) {
@@ -738,88 +735,72 @@ async function callRepairAPI(payload) {
   return result;
 }
 
-let isSubmitting = false;
-
-
   let isSubmitting = false;
-  
-async function handleSubmit(event) {
+  function handleSubmit(event) {
   event.preventDefault();
 
-  if (isSubmitting) return;
-
-  const form = document.getElementById('nameForm');
-
-  if (!form.reportValidity()) return;
+  if (isSubmitting) {
+    return;
+  }
 
   isSubmitting = true;
 
-  const button = document.getElementById('submitBtn');
-  const message = document.getElementById('message');
-
-  const name = document.getElementById('reporterName').value;
-  const room = document.getElementById('room').value;
-  const equipment = document.getElementById('equipment').value;
-  const assetNumber = document.getElementById('assetNumber').value;
-  const reporterEmail = document.getElementById('reporterEmail').value;
-  const problem = document.getElementById('problem').value;
-  const urgency = document.getElementById('urgency').value;
-
-  button.disabled = true;
-  message.className = '';
-  message.textContent = 'กำลังบันทึกข้อมูล...';
-
-  try {
-    const result = await callRepairAPI({
-      action: 'submitRepair',
-      name: name,
-      room: room,
-      equipment: equipment,
-      problem: problem,
-      urgency: urgency,
-      assetNumber: assetNumber,
-      reporterEmail: reporterEmail
-    });
-
-    if (!result.success) {
-      throw new Error(result.message || 'ไม่สามารถบันทึกข้อมูลได้');
-    }
-
-    message.className = 'success';
-    message.textContent =
-      result.message +
-      ' เลขรับแจ้ง ' + result.repairId +
-      ' ' + (result.emailNotification || '');
-
-    form.reset();
-
-    // โหลดรายการแจ้งซ่อมใหม่หลังบันทึกสำเร็จ
-    recordsLoaded = false;
-    await loadRepairRecords();
-
-  } catch (error) {
-    message.className = 'error';
-    message.textContent = 'บันทึกไม่สำเร็จ: ' + error.message;
-
-  } finally {
-    isSubmitting = false;
-    button.disabled = false;
-  }
-}
+    const form = document.getElementById('nameForm');
   
+  if (!form.reportValidity()) {
+  isSubmitting = false;
+  return;
+}
+    const button = document.getElementById('submitBtn');
+    const message = document.getElementById('message');
+    const name = document.getElementById('reporterName').value;
+    const room = document.getElementById('room').value;
+    const equipment = document.getElementById('equipment').value;
+    const assetNumber = document.getElementById('assetNumber').value;
+    const reporterEmail = document.getElementById('reporterEmail').value;
+    const problem = document.getElementById('problem').value;
+    const urgency = document.getElementById('urgency').value;
+
+    button.disabled = true;
+    message.textContent = 'กำลังบันทึกข้อมูล...';
+
+    google.script.run
+      .withSuccessHandler(function(result) {
+        message.className = 'success';
+        message.textContent =
+          result.message +
+          ' เลขรับแจ้ง: ' + result.repairId +
+          ' | ' + (result.emailNotification || '');
+
+        form.reset();
+
+        // โหลดรายการแจ้งซ่อมใหม่หลังบันทึกสำเร็จ
+        recordsLoaded = false;
+        loadRepairRecords();
+
+        isSubmitting = false;
+        button.disabled = false;
+})
+      .withFailureHandler(function(error) {
+        message.className = 'error';
+        message.textContent =
+          'บันทึกไม่สำเร็จ: ' + error.message;
+        
+        isSubmitting = false;
+        button.disabled = false;
+})
+      .submitTestName(name, room, equipment, problem, urgency, assetNumber, reporterEmail);
+  }
 
 let allRepairRecords = [];
 let recordsLoaded = false;
 let isLoadingRecords = false;
 
-
 async function loadRepairRecords() {
   const message = document.getElementById('recordsMessage');
 
-  // ถ้ากำลังโหลดอยู่ ไม่เรียกซ้ำ
   if (isLoadingRecords) return;
 
-  // ถ้าโหลดข้อมูลไว้แล้ว ใช้ข้อมูลเดิมได้เลย
   if (recordsLoaded) {
     renderRepairRecords();
     return;
@@ -848,14 +829,12 @@ async function loadRepairRecords() {
   } catch (error) {
     recordsLoaded = false;
     message.className = 'error';
-    message.textContent =
-      'โหลดข้อมูลไม่สำเร็จ: ' + error.message;
+    message.textContent = 'โหลดข้อมูลไม่สำเร็จ: ' + error.message;
 
   } finally {
     isLoadingRecords = false;
   }
 }
-
 
 function renderRepairRecords() {
   const message = document.getElementById('recordsMessage');
@@ -864,7 +843,7 @@ function renderRepairRecords() {
 
   const keyword = searchInput.value.trim().toLowerCase();
 
-   กรองข้อมูลในหน่วยความจำ
+  // กรองข้อมูลในหน่วยความจำ
   const filteredRecords = allRepairRecords.filter(function(record) {
     const searchableText = [
       record.repairId,
@@ -873,7 +852,7 @@ function renderRepairRecords() {
       record.assetNumber
     ]
       .map(function(value) {
-        return String(value  '').toLowerCase();
+        return String(value || '').toLowerCase();
       })
       .join(' ');
 
@@ -894,11 +873,11 @@ function renderRepairRecords() {
   }
 
   message.textContent = keyword
-     'พบ ' + filteredRecords.length +
+    ? 'พบ ' + filteredRecords.length +
       ' รายการ จากทั้งหมด ' + allRepairRecords.length + ' รายการ'
-     'พบรายการแจ้งซ่อม ' + filteredRecords.length + ' รายการ';
+    : 'พบรายการแจ้งซ่อม ' + filteredRecords.length + ' รายการ';
 
-   สถานะที่อนุญาตให้เลือก
+  // สถานะที่อนุญาตให้เลือก
   const allowedStatuses = [
     'รอดำเนินการ',
     'กำลังซ่อม',
@@ -919,14 +898,14 @@ function renderRepairRecords() {
 
     item.className = 'repair-item';
 
-    title.textContent = 'เลขรับแจ้ง ' + record.repairId;
-    date.textContent = 'วันที่แจ้ง ' + record.reportedAt;
-    reporter.textContent = 'ผู้แจ้ง ' + record.reporterName;
-    room.textContent = 'อาคารห้อง ' + record.room;
-    equipment.textContent = 'อุปกรณ์ ' + record.equipment;
-    assetNumber.textContent = 'หมายเลขครุภัณฑ์ ' + (record.assetNumber  '-');
+    title.textContent = 'เลขรับแจ้ง: ' + record.repairId;
+    date.textContent = 'วันที่แจ้ง: ' + record.reportedAt;
+    reporter.textContent = 'ผู้แจ้ง: ' + record.reporterName;
+    room.textContent = 'อาคาร/ห้อง: ' + record.room;
+    equipment.textContent = 'อุปกรณ์: ' + record.equipment;
+    assetNumber.textContent = 'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
 
-    urgency.textContent = 'ความเร่งด่วน ' + record.urgency;
+    urgency.textContent = 'ความเร่งด่วน: ' + record.urgency;
     urgency.className = 'urgency-label';
 
     if (record.urgency === 'เร่งด่วน') {
@@ -935,7 +914,7 @@ function renderRepairRecords() {
       urgency.classList.add('very-urgent');
     }
 
-    status.textContent = 'สถานะ ' + record.status;
+    status.textContent = 'สถานะ: ' + record.status;
     status.className = 'status-label';
 
     if (record.status === 'รอดำเนินการ') {
@@ -946,11 +925,11 @@ function renderRepairRecords() {
       status.classList.add('completed');
     }
 
-    problem.textContent = 'รายละเอียดปัญหา ' + record.problem;
+    problem.textContent = 'รายละเอียดปัญหา: ' + record.problem;
 
     problem.className = 'repair-problem';
 
- แสดงรายละเอียดรายการแจ้งซ่อมให้ผู้ใช้ทุกคน
+// แสดงรายละเอียดรายการแจ้งซ่อมให้ผู้ใช้ทุกคน
 item.append(
   title,
   date,
@@ -963,7 +942,7 @@ item.append(
   status
 );
 
- สร้างพื้นที่จัดการสถานะ เฉพาะแอดมิน
+// สร้างพื้นที่จัดการสถานะ เฉพาะแอดมิน
 if (isAdminUser) {
 
   const statusControl = document.createElement('div');
@@ -972,7 +951,7 @@ if (isAdminUser) {
   const statusSelect = document.createElement('select');
   statusSelect.className = 'status-select';
 
-   รองรับสถานะเดิมที่อาจยังอยู่ใน Google Sheets
+  // รองรับสถานะเดิมที่อาจยังอยู่ใน Google Sheets
   if (
     record.status &&
     !allowedStatuses.includes(record.status)
@@ -997,13 +976,13 @@ if (isAdminUser) {
   saveButton.className = 'status-save-btn';
   saveButton.textContent = 'บันทึกสถานะ';
 
-   ข้อความแจ้งผลการเปลี่ยนสถานะ
+  // ข้อความแจ้งผลการเปลี่ยนสถานะ
   const statusMessage = document.createElement('p');
   statusMessage.className = 'status-message';
   statusMessage.setAttribute('role', 'status');
-  statusMessage.textContent = record.statusMessage  '';
+  statusMessage.textContent = record.statusMessage || '';
 
-   เมื่อกดปุ่มบันทึก
+  // เมื่อกดปุ่มบันทึก
   saveButton.addEventListener('click', function() {
     const newStatus = statusSelect.value;
 
@@ -1018,14 +997,14 @@ if (isAdminUser) {
 
     google.script.run
       .withSuccessHandler(function(result) {
-        if (!result  !result.success) {
+        if (!result || !result.success) {
           saveButton.disabled = false;
           statusSelect.disabled = false;
 
           statusMessage.textContent =
             result && result.message
-               result.message
-               'ไม่สามารถบันทึกสถานะได้';
+              ? result.message
+              : 'ไม่สามารถบันทึกสถานะได้';
 
           return;
         }
@@ -1035,8 +1014,8 @@ if (isAdminUser) {
         record.statusMessage =
           result.message +
           (result.reporterNotification
-             '  ' + result.reporterNotification
-             '');
+            ? ' | ' + result.reporterNotification
+            : '');
 
         renderRepairRecords();
       })
@@ -1044,7 +1023,7 @@ if (isAdminUser) {
         saveButton.disabled = false;
         statusSelect.disabled = false;
         statusMessage.textContent =
-          'บันทึกไม่สำเร็จ ' + error.message;
+          'บันทึกไม่สำเร็จ: ' + error.message;
       })
       .updateRepairStatus(record.repairId, newStatus);
   });
@@ -1058,7 +1037,7 @@ if (isAdminUser) {
   });
 }
 
- ค้นหาทันทีเมื่อพิมพ์
+// ค้นหาทันทีเมื่อพิมพ์
 document.getElementById('searchInput')
   .addEventListener('input', function() {
     if (recordsLoaded) {
@@ -1083,9 +1062,8 @@ document.getElementById('clearSearchBtn')
     searchInput.focus();
   });
 
-
 document.getElementById('searchAssetHistoryBtn')
-  .addEventListener('click', async function() {
+  .addEventListener('click', function() {
 
     const assetNumber = document
       .getElementById('assetHistoryInput')
@@ -1107,77 +1085,68 @@ document.getElementById('searchAssetHistoryBtn')
     button.textContent = 'กำลังค้นหา...';
     message.textContent = 'กำลังค้นหาประวัติการซ่อม...';
 
-    try {
-      const result = await callRepairAPI({
-        action: 'getRepairHistory',
-        assetNumber: assetNumber
-      });
+    google.script.run
+      .withSuccessHandler(function(records) {
 
-      if (!result.success) {
-        throw new Error(result.message || 'ไม่สามารถค้นหาประวัติได้');
-      }
+        button.disabled = false;
+        button.textContent = 'ค้นหาประวัติ';
 
-      const records = Array.isArray(result.records)
-        ? result.records
-        : [];
+        if (!records || records.length === 0) {
+          message.textContent = 'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
+          return;
+        }
 
-      if (records.length === 0) {
-        message.textContent = 'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
-        return;
-      }
+        message.textContent =
+          'พบประวัติการซ่อมทั้งหมด ' + records.length + ' รายการ';
 
-      message.textContent =
-        'พบประวัติการซ่อมทั้งหมด ' + records.length + ' รายการ';
+        records.forEach(function(record) {
+          const item = document.createElement('div');
+          item.className = 'repair-item';
 
-      records.forEach(function(record) {
-        const item = document.createElement('div');
-        item.className = 'repair-item';
+const title = document.createElement('h3');
+title.textContent = record.repairId;
 
-        const title = document.createElement('h3');
-        title.textContent = record.repairId;
+const date = document.createElement('p');
+date.textContent = 'วันที่แจ้ง: ' + record.reportedAt;
 
-        const date = document.createElement('p');
-        date.textContent = 'วันที่แจ้ง ' + record.reportedAt;
+const reporter = document.createElement('p');
+reporter.textContent = 'ผู้แจ้ง: ' + record.reporterName;
 
-        const reporter = document.createElement('p');
-        reporter.textContent = 'ผู้แจ้ง ' + record.reporterName;
+const assetNumber = document.createElement('p');
+assetNumber.textContent = 'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
 
-        const assetNumber = document.createElement('p');
-        assetNumber.textContent = 'หมายเลขครุภัณฑ์ ' + (record.assetNumber || '-');
+const equipment = document.createElement('p');
+equipment.textContent = 'อุปกรณ์: ' + record.equipment;
 
-        const equipment = document.createElement('p');
-        equipment.textContent = 'อุปกรณ์ ' + record.equipment;
+const problem = document.createElement('p');
+problem.textContent = 'อาการ: ' + record.problem;
 
-        const problem = document.createElement('p');
-        problem.textContent = 'อาการ ' + record.problem;
+const status = document.createElement('p');
+status.textContent = 'สถานะ: ' + record.status;
 
-        const status = document.createElement('p');
-        status.textContent = 'สถานะ ' + record.status;
+item.appendChild(title);
+item.appendChild(date);
+item.appendChild(reporter);
+item.appendChild(assetNumber);
+item.appendChild(equipment);
+item.appendChild(problem);
+item.appendChild(status);
 
-        item.append(
-          title,
-          date,
-          reporter,
-          assetNumber,
-          equipment,
-          problem,
-          status
-        );
+historyList.appendChild(item);
+        });
+      })
+      .withFailureHandler(function(error) {
 
-        historyList.appendChild(item);
-      });
+        button.disabled = false;
+        button.textContent = 'ค้นหาประวัติ';
 
-    } catch (error) {
-      message.textContent = 'ค้นหาประวัติไม่สำเร็จ: ' + error.message;
-
-    } finally {
-      button.disabled = false;
-      button.textContent = 'ค้นหาประวัติ';
-    }
+        message.textContent =
+          'ค้นหาประวัติไม่สำเร็จ: ' + error.message;
+      })
+      .getRepairHistoryByAssetNumber(assetNumber);
   });
 
-
- เปิด-ปิดรายการแจ้งซ่อมล่าสุด
+// เปิด-ปิดรายการแจ้งซ่อมล่าสุด
 document.getElementById('toggleRecordsBtn')
   .addEventListener('click', function() {
 
@@ -1187,13 +1156,13 @@ document.getElementById('toggleRecordsBtn')
 
     const isHidden = content.style.display === 'none';
 
-    content.style.display = isHidden  'block'  'none';
+    content.style.display = isHidden ? 'block' : 'none';
 
-    text.textContent = isHidden  'ซ่อนรายการ'  'แสดงรายการ';
+    text.textContent = isHidden ? 'ซ่อนรายการ' : 'แสดงรายการ';
 
     button.setAttribute('aria-expanded', String(isHidden));
 
-     โหลดข้อมูลเมื่อเปิดรายการครั้งแรก
+    // โหลดข้อมูลเมื่อเปิดรายการครั้งแรก
     if (isHidden && !recordsLoaded) {
       loadRepairRecords();
     }
@@ -1201,27 +1170,12 @@ document.getElementById('toggleRecordsBtn')
 
 let isAdminUser = false;
 
-google.script.run
-  .withSuccessHandler(function(result) {
-    isAdminUser = result.isAdmin === true;
+// เปิดส่วนรายการแจ้งซ่อมให้ผู้ใช้ทั่วไป
+document.getElementById('recordsSection').style.display = 'block';
 
-     แสดงรายการแจ้งซ่อมให้ทุกคน
-    document.getElementById('recordsSection').style.display = 'block';
+// โหลดรายการแจ้งซ่อมผ่าน API
+loadRepairRecords();
 
-    console.log(
-      isAdminUser
-         'เข้าใช้งานในสิทธิ์แอดมิน'
-         'เข้าใช้งานในสิทธิ์ผู้ใช้ทั่วไป'
-    );
-
-     โหลดรายการหลังตรวจสอบสิทธิ์เสร็จ
-    loadRepairRecords();
-  })
-  .withFailureHandler(function(error) {
-    console.error('ตรวจสอบสิทธิ์ไม่สำเร็จ', error.message);
-  })
-  .testAdminAccess();
-
-script
-body
-html
+</script>
+</body>
+</html>
