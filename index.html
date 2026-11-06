@@ -1253,8 +1253,10 @@ async function handleGoogleCredential(response) {
     });
 
     if (!result.success || !result.isAdmin) {
-      throw new Error('บัญชี Google นี้ไม่มีสิทธิ์ผู้ดูแลระบบ');
-    }
+  throw new Error(
+    result.message || 'บัญชี Google นี้ไม่มีสิทธิ์ผู้ดูแลระบบ'
+  );
+}
 
     // เก็บ token ไว้ในหน่วยความจำของหน้าเว็บ
     adminIdToken = response.credential;
