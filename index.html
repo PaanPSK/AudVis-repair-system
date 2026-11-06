@@ -544,6 +544,39 @@ hr {
   color: #dc2626;
 }
 
+    
+/* ข้อความแจ้งสถานะการค้นหา */
+#assetHistoryMessage {
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#assetHistoryMessage.loading {
+  color: #64748b;
+}
+
+#assetHistoryMessage.success {
+  color: #15803d;
+  font-weight: 600;
+}
+
+#assetHistoryMessage.empty {
+  color: #64748b;
+}
+
+#assetHistoryMessage.error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* สถานะปุ่มขณะกำลังค้นหา */
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
   </style>
 </head>
 <body>
@@ -996,28 +1029,37 @@ document.getElementById('clearSearchBtn')
     searchInput.focus();
   });
 
+
 document.getElementById('searchAssetHistoryBtn')
   .addEventListener('click', async function() {
 
-    const assetNumber = document
-      .getElementById('assetHistoryInput')
-      .value
-      .trim();
+    const assetInput = document.getElementById('assetHistoryInput');
+    const assetNumber = assetInput.value.trim();
 
     const message = document.getElementById('assetHistoryMessage');
     const historyList = document.getElementById('assetHistoryList');
     const button = document.getElementById('searchAssetHistoryBtn');
 
+    // ป้องกันการกดค้นหาซ้ำ
+    if (button.disabled) return;
+
+    // ล้างผลลัพธ์เดิม
     historyList.replaceChildren();
     message.className = '';
+    message.textContent = '';
 
+    // ตรวจสอบหมายเลขครุภัณฑ์
     if (!assetNumber) {
+      message.className = 'error';
       message.textContent = 'กรุณากรอกหมายเลขครุภัณฑ์';
+      assetInput.focus();
       return;
     }
 
     button.disabled = true;
     button.textContent = 'กำลังค้นหา...';
+
+    message.className = 'loading';
     message.textContent = 'กำลังค้นหาประวัติการซ่อม...';
 
     try {
@@ -1027,46 +1069,60 @@ document.getElementById('searchAssetHistoryBtn')
       });
 
       if (!result.success) {
-        throw new Error(result.message || 'ไม่สามารถค้นหาประวัติได้');
+        throw new Error(
+          result.message || 'ไม่สามารถค้นหาประวัติได้'
+        );
       }
 
       const records = Array.isArray(result.records)
         ? result.records
         : [];
 
+      // กรณีไม่พบข้อมูล
       if (records.length === 0) {
-        message.textContent = 'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
+        message.className = 'empty';
+        message.textContent =
+          'ไม่พบประวัติการซ่อมของครุภัณฑ์นี้';
         return;
       }
 
+      // กรณีพบข้อมูล
+      message.className = 'success';
       message.textContent =
-        'พบประวัติการซ่อมทั้งหมด ' + records.length + ' รายการ';
+        'พบประวัติการซ่อมทั้งหมด ' +
+        records.length + ' รายการ';
 
       records.forEach(function(record) {
         const item = document.createElement('div');
         item.className = 'repair-item';
 
         const title = document.createElement('h3');
-        title.textContent = record.repairId;
+        title.textContent = record.repairId || '-';
 
         const date = document.createElement('p');
-        date.textContent = 'วันที่แจ้ง: ' + record.reportedAt;
+        date.textContent =
+          'วันที่แจ้ง: ' + (record.reportedAt || '-');
 
         const reporter = document.createElement('p');
-        reporter.textContent = 'ผู้แจ้ง: ' + record.reporterName;
+        reporter.textContent =
+          'ผู้แจ้ง: ' + (record.reporterName || '-');
 
         const assetNumberText = document.createElement('p');
         assetNumberText.textContent =
           'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
 
         const equipment = document.createElement('p');
-        equipment.textContent = 'อุปกรณ์: ' + record.equipment;
+        equipment.textContent =
+          'อุปกรณ์: ' + (record.equipment || '-');
 
         const problem = document.createElement('p');
-        problem.textContent = 'อาการ: ' + record.problem;
+        problem.textContent =
+          'อาการ: ' + (record.problem || '-');
 
         const status = document.createElement('p');
-        status.textContent = 'สถานะ: ' + record.status;
+        status.textContent =
+          'สถานะ: ' + (record.status || 'ไม่ระบุ');
+
         status.className = 'status-label';
 
         if (record.status === 'รอดำเนินการ') {
@@ -1100,6 +1156,7 @@ document.getElementById('searchAssetHistoryBtn')
       button.textContent = 'ค้นหาประวัติ';
     }
   });
+
 
 // เปิด-ปิดรายการแจ้งซ่อมล่าสุด
 document.getElementById('toggleRecordsBtn')
