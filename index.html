@@ -595,6 +595,9 @@ button:disabled {
 
 
   </style>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 </head>
 <body>
 <main class="card">
@@ -703,6 +706,31 @@ button:disabled {
 
 <hr>
 
+  <!-- ส่วนเข้าสู่ระบบผู้ดูแลระบบ -->
+<section id="adminLoginSection">
+  <h2>สำหรับผู้ดูแลระบบ</h2>
+
+  <p id="adminMessage" role="status">
+    กรุณาเข้าสู่ระบบด้วยบัญชี Google ที่ได้รับอนุญาต
+  </p>
+
+  <div
+    id="g_id_onload"
+    data-client_id="552159582692-068bklo550i1u05cismdtvhm7nr7gk17.apps.googleusercontent.com"
+    data-callback="handleGoogleCredential"
+    data-auto_prompt="false">
+  </div>
+
+  <div
+    class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="signin_with"
+    data-shape="rectangular"
+    data-logo_alignment="left">
+  </div>
+</section>
 
 <section id="recordsSection" style="display: none;">
 
@@ -1201,6 +1229,48 @@ document.getElementById('toggleRecordsBtn')
   });
 
 let isAdminUser = false;
+let adminIdToken = '';
+
+
+// รับข้อมูลหลังจากเข้าสู่ระบบ Google
+async function handleGoogleCredential(response) {
+  const message = document.getElementById('adminMessage');
+
+  message.className = '';
+  message.textContent = 'กำลังตรวจสอบสิทธิ์ผู้ดูแลระบบ...';
+
+  adminIdToken = '';
+  isAdminUser = false;
+
+  try {
+    if (!response || !response.credential) {
+      throw new Error('ไม่ได้รับข้อมูลการเข้าสู่ระบบจาก Google');
+    }
+
+    const result = await callRepairAPI({
+      action: 'checkAdmin',
+      idToken: response.credential
+    });
+
+    if (!result.success || !result.isAdmin) {
+      throw new Error('บัญชี Google นี้ไม่มีสิทธิ์ผู้ดูแลระบบ');
+    }
+
+    // เก็บ token ไว้ในหน่วยความจำของหน้าเว็บ
+    adminIdToken = response.credential;
+    isAdminUser = true;
+
+    message.className = 'success';
+    message.textContent = 'เข้าสู่ระบบผู้ดูแลระบบสำเร็จ';
+
+  } catch (error) {
+    adminIdToken = '';
+    isAdminUser = false;
+
+    message.className = 'error';
+    message.textContent = error.message;
+  }
+}
 
 // เปิดส่วนรายการแจ้งซ่อมให้ผู้ใช้ทั่วไป
 document.getElementById('recordsSection').style.display = 'block';
