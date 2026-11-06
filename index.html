@@ -615,6 +615,89 @@ button:disabled {
   font-weight: 600;
 }
 
+    /* ==============================
+   Admin Login Section
+============================== */
+
+#adminLoginSection {
+  margin: 0 0 24px;
+}
+
+#adminLoginSection h2 {
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+#adminMessage {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#adminLoginSection .g_id_signin {
+  margin: 0;
+}
+
+
+/* ==============================
+   Admin Status Controls
+============================== */
+
+.status-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.status-control label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.status-select,
+.status-save-btn {
+  height: 42px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.status-select {
+  min-width: 155px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #263445;
+}
+
+.status-save-btn {
+  padding: 0 18px;
+  border: none;
+  background: #176f6b;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-save-btn:hover {
+  background: #125c59;
+}
+
+.status-save-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.status-result {
+  flex-basis: 100%;
+}
+
   </style>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
