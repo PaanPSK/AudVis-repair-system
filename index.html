@@ -576,6 +576,23 @@ button:disabled {
   cursor: not-allowed;
 }
 
+    
+/* ข้อความแจ้งสถานะรายการแจ้งซ่อม */
+#recordsMessage {
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#recordsMessage.success {
+  color: #15803d;
+  font-weight: 600;
+}
+
+#recordsMessage.empty {
+  color: #64748b;
+}
+
 
   </style>
 </head>
@@ -891,6 +908,7 @@ async function loadRepairRecords() {
   }
 }
 
+
 function renderRepairRecords() {
   const message = document.getElementById('recordsMessage');
   const list = document.getElementById('recordsList');
@@ -917,28 +935,28 @@ function renderRepairRecords() {
   list.replaceChildren();
   message.className = '';
 
+  // กรณียังไม่มีรายการในระบบ
   if (allRepairRecords.length === 0) {
-    message.textContent = 'ยังไม่มีรายการแจ้งซ่อม';
+    message.className = 'empty';
+    message.textContent = 'ยังไม่มีรายการแจ้งซ่อมในระบบ';
     return;
   }
 
+  // กรณีค้นหาแล้วไม่พบข้อมูล
   if (filteredRecords.length === 0) {
+    message.className = 'empty';
     message.textContent = 'ไม่พบรายการที่ตรงกับคำค้นหา';
     return;
   }
 
+  // แสดงจำนวนรายการ
+  message.className = 'success';
   message.textContent = keyword
     ? 'พบ ' + filteredRecords.length +
       ' รายการ จากทั้งหมด ' + allRepairRecords.length + ' รายการ'
-    : 'พบรายการแจ้งซ่อม ' + filteredRecords.length + ' รายการ';
+    : 'รายการแจ้งซ่อมทั้งหมด ' + filteredRecords.length + ' รายการ';
 
-  // สถานะที่อนุญาตให้เลือก
-  const allowedStatuses = [
-    'รอดำเนินการ',
-    'กำลังซ่อม',
-    'ซ่อมเสร็จแล้ว'
-  ];
-
+  // สร้างการ์ดรายการแจ้งซ่อม
   filteredRecords.forEach(function(record) {
     const item = document.createElement('article');
     const title = document.createElement('h3');
@@ -953,14 +971,18 @@ function renderRepairRecords() {
 
     item.className = 'repair-item';
 
-    title.textContent = 'เลขรับแจ้ง: ' + record.repairId;
-    date.textContent = 'วันที่แจ้ง: ' + record.reportedAt;
-    reporter.textContent = 'ผู้แจ้ง: ' + record.reporterName;
-    room.textContent = 'อาคาร/ห้อง: ' + record.room;
-    equipment.textContent = 'อุปกรณ์: ' + record.equipment;
-    assetNumber.textContent = 'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
+    title.textContent = 'เลขรับแจ้ง: ' + (record.repairId || '-');
+    date.textContent = 'วันที่แจ้ง: ' + (record.reportedAt || '-');
+    reporter.textContent = 'ผู้แจ้ง: ' + (record.reporterName || '-');
+    room.textContent = 'อาคาร/ห้อง: ' + (record.room || '-');
+    equipment.textContent = 'อุปกรณ์: ' + (record.equipment || '-');
 
-    urgency.textContent = 'ความเร่งด่วน: ' + record.urgency;
+    assetNumber.textContent =
+      'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
+
+    urgency.textContent =
+      'ความเร่งด่วน: ' + (record.urgency || '-');
+
     urgency.className = 'urgency-label';
 
     if (record.urgency === 'เร่งด่วน') {
@@ -969,7 +991,7 @@ function renderRepairRecords() {
       urgency.classList.add('very-urgent');
     }
 
-    status.textContent = 'สถานะ: ' + record.status;
+    status.textContent = 'สถานะ: ' + (record.status || 'ไม่ระบุ');
     status.className = 'status-label';
 
     if (record.status === 'รอดำเนินการ') {
@@ -980,29 +1002,27 @@ function renderRepairRecords() {
       status.classList.add('completed');
     }
 
-    problem.textContent = 'รายละเอียดปัญหา: ' + record.problem;
+    problem.textContent =
+      'รายละเอียดปัญหา: ' + (record.problem || '-');
 
     problem.className = 'repair-problem';
 
-// แสดงรายละเอียดรายการแจ้งซ่อมให้ผู้ใช้ทุกคน
-item.append(
-  title,
-  date,
-  reporter,
-  room,
-  equipment,
-  assetNumber,
-  problem,
-  urgency,
-  status
-);
-
-// ระบบจัดการสถานะแอดมินยังไม่เปิดใช้งาน
-// เนื่องจากต้องพัฒนาระบบยืนยันตัวตนและสิทธิ์การเข้าถึงก่อน
+    item.append(
+      title,
+      date,
+      reporter,
+      room,
+      equipment,
+      assetNumber,
+      problem,
+      urgency,
+      status
+    );
 
     list.appendChild(item);
   });
 }
+
 
 // ค้นหาทันทีเมื่อพิมพ์
 document.getElementById('searchInput')
