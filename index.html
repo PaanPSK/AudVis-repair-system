@@ -1142,19 +1142,38 @@ allowedStatuses.forEach(function(value) {
           }
 
           // อัปเดตข้อมูลในหน่วยความจำ
-          record.status = newStatus;
+record.status = newStatus;
 
-          resultMessage.className = 'status-result success';
-          resultMessage.textContent =
-            result.message || 'อัปเดตสถานะเรียบร้อยแล้ว';
+// อัปเดตข้อความสถานะบนการ์ดเดิม
+status.textContent = 'สถานะ: ' + newStatus;
 
-          if (result.reporterNotification) {
-            resultMessage.textContent +=
-              ' (' + result.reporterNotification + ')';
-          }
+status.classList.remove(
+  'pending',
+  'in-progress',
+  'completed'
+);
 
-          // แสดงสถานะใหม่ในการ์ด
-          renderRepairRecords();
+if (newStatus === 'รอดำเนินการ') {
+  status.classList.add('pending');
+} else if (newStatus === 'กำลังซ่อม') {
+  status.classList.add('in-progress');
+} else if (newStatus === 'ซ่อมเสร็จแล้ว') {
+  status.classList.add('completed');
+}
+
+// แสดงข้อความแจ้งผลโดยไม่สร้างการ์ดใหม่
+resultMessage.className = 'status-result success';
+resultMessage.textContent =
+  result.message || 'อัปเดตสถานะเรียบร้อยแล้ว';
+
+if (result.reporterNotification) {
+  resultMessage.textContent +=
+    ' (' + result.reporterNotification + ')';
+}
+
+saveButton.textContent = 'บันทึกสถานะ';
+saveButton.disabled = false;
+select.disabled = false;
 
         } catch (error) {
           resultMessage.className = 'status-result error';
