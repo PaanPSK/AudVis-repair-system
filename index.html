@@ -1075,22 +1075,27 @@ function renderRepairRecords() {
       select.className = 'status-select';
 
       const allowedStatuses = [
-        'รอดำเนินการ',
-        'กำลังซ่อม',
-        'ซ่อมเสร็จแล้ว'
-      ];
+  'รอดำเนินการ',
+  'กำลังซ่อม',
+  'ซ่อมเสร็จแล้ว'
+];
 
-      allowedStatuses.forEach(function(value) {
-        const option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
+// รองรับชื่อสถานะเดิมในข้อมูลเก่า
+const currentStatus = record.status === 'รับเรื่องแล้ว'
+  ? 'รอดำเนินการ'
+  : record.status;
 
-        if (value === record.status) {
-          option.selected = true;
-        }
+allowedStatuses.forEach(function(value) {
+  const option = document.createElement('option');
+  option.value = value;
+  option.textContent = value;
 
-        select.appendChild(option);
-      });
+  if (value === currentStatus) {
+    option.selected = true;
+  }
+
+  select.appendChild(option);
+});
 
       const saveButton = document.createElement('button');
       saveButton.type = 'button';
