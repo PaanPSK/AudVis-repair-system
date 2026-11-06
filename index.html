@@ -653,26 +653,56 @@ hr {
 
 <hr>
 
+
 <section id="recordsSection" style="display: none;">
-  <p class="section-description">
-    ค้นหาและติดตามรายการแจ้งซ่อม รวมถึงตรวจสอบประวัติการซ่อม
-  </p>
 
-  <h2>ค้นหารายการแจ้งซ่อม</h2>
+  <!-- ส่วนรายการแจ้งซ่อมล่าสุด -->
+  <div class="records-header">
+    <h2>รายการแจ้งซ่อมล่าสุด</h2>
 
-  <div class="search-box">
-    <input
-      type="search"
-      id="searchInput"
-      placeholder="เลขรับแจ้ง ชื่อผู้แจ้ง หรือชื่ออุปกรณ์"
+    <button
+      type="button"
+      id="toggleRecordsBtn"
+      aria-expanded="false"
     >
-
-    <button type="button" id="clearSearchBtn">
-      ล้างคำค้นหา
+      <span id="toggleRecordsText">แสดงรายการ</span>
+      <span id="toggleRecordsIcon" aria-hidden="true">▼</span>
     </button>
   </div>
 
+  <p class="section-description">
+    ค้นหาและติดตามรายการแจ้งซ่อมล่าสุด
+  </p>
+
+  <div id="recordsContent" style="display: none;">
+
+    <!-- ช่องค้นหารายการแจ้งซ่อม -->
+    <div class="search-box">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="เลขรับแจ้ง ชื่อผู้แจ้ง หรือชื่ออุปกรณ์"
+      >
+
+      <button type="button" id="clearSearchBtn">
+        ล้างคำค้นหา
+      </button>
+    </div>
+
+    <p id="recordsMessage" role="status"></p>
+
+    <div id="recordsList"></div>
+
+  </div>
+
+  <hr>
+
+  <!-- ส่วนประวัติการซ่อมตามหมายเลขครุภัณฑ์ -->
   <h2>ประวัติการซ่อมตามหมายเลขครุภัณฑ์</h2>
+
+  <p class="section-description">
+    ค้นหาประวัติการซ่อมย้อนหลังของอุปกรณ์แต่ละรายการ
+  </p>
 
   <div class="search-box">
     <input
@@ -689,31 +719,12 @@ hr {
     </button>
   </div>
 
-<p id="assetHistoryMessage" role="status"></p>
+  <p id="assetHistoryMessage" role="status"></p>
 
-<div id="assetHistoryList"></div>
-
-  <div class="records-header">
-  <h2>รายการแจ้งซ่อมล่าสุด</h2>
-
-  <button
-    type="button"
-    id="toggleRecordsBtn"
-    aria-expanded="false"
-  >
-    <span id="toggleRecordsText">แสดงรายการ</span>
-    <span id="toggleRecordsIcon" aria-hidden="true">▼</span>
-  </button>
-</div>
-
-  <div id="recordsContent" style="display: none;">
-  <p id="recordsMessage" role="status"></p>
-  <div id="recordsList"></div>
-</div>
-  
-  <hr>
+  <div id="assetHistoryList"></div>
 
 </section>
+
 
 </main>
 <script>
