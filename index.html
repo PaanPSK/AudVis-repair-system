@@ -593,6 +593,27 @@ button:disabled {
   color: #64748b;
 }
 
+    .status-result {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.status-result.success {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.status-result.error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.status-control label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
 
   </style>
 
@@ -944,7 +965,6 @@ function renderRepairRecords() {
 
   const keyword = searchInput.value.trim().toLowerCase();
 
-  // กรองข้อมูลในหน่วยความจำ
   const filteredRecords = allRepairRecords.filter(function(record) {
     const searchableText = [
       record.repairId,
@@ -963,54 +983,49 @@ function renderRepairRecords() {
   list.replaceChildren();
   message.className = '';
 
-  // กรณียังไม่มีรายการในระบบ
   if (allRepairRecords.length === 0) {
     message.className = 'empty';
     message.textContent = 'ยังไม่มีรายการแจ้งซ่อมในระบบ';
     return;
   }
 
-  // กรณีค้นหาแล้วไม่พบข้อมูล
   if (filteredRecords.length === 0) {
     message.className = 'empty';
     message.textContent = 'ไม่พบรายการที่ตรงกับคำค้นหา';
     return;
   }
 
-  // แสดงจำนวนรายการ
   message.className = 'success';
   message.textContent = keyword
     ? 'พบ ' + filteredRecords.length +
       ' รายการ จากทั้งหมด ' + allRepairRecords.length + ' รายการ'
     : 'รายการแจ้งซ่อมทั้งหมด ' + filteredRecords.length + ' รายการ';
 
-  // สร้างการ์ดรายการแจ้งซ่อม
   filteredRecords.forEach(function(record) {
     const item = document.createElement('article');
-    const title = document.createElement('h3');
-    const date = document.createElement('p');
-    const reporter = document.createElement('p');
-    const room = document.createElement('p');
-    const equipment = document.createElement('p');
-    const assetNumber = document.createElement('p');
-    const urgency = document.createElement('p');
-    const status = document.createElement('p');
-    const problem = document.createElement('p');
-
     item.className = 'repair-item';
 
+    const title = document.createElement('h3');
     title.textContent = 'เลขรับแจ้ง: ' + (record.repairId || '-');
+
+    const date = document.createElement('p');
     date.textContent = 'วันที่แจ้ง: ' + (record.reportedAt || '-');
+
+    const reporter = document.createElement('p');
     reporter.textContent = 'ผู้แจ้ง: ' + (record.reporterName || '-');
+
+    const room = document.createElement('p');
     room.textContent = 'อาคาร/ห้อง: ' + (record.room || '-');
+
+    const equipment = document.createElement('p');
     equipment.textContent = 'อุปกรณ์: ' + (record.equipment || '-');
 
+    const assetNumber = document.createElement('p');
     assetNumber.textContent =
       'หมายเลขครุภัณฑ์: ' + (record.assetNumber || '-');
 
-    urgency.textContent =
-      'ความเร่งด่วน: ' + (record.urgency || '-');
-
+    const urgency = document.createElement('p');
+    urgency.textContent = 'ความเร่งด่วน: ' + (record.urgency || '-');
     urgency.className = 'urgency-label';
 
     if (record.urgency === 'เร่งด่วน') {
@@ -1019,6 +1034,7 @@ function renderRepairRecords() {
       urgency.classList.add('very-urgent');
     }
 
+    const status = document.createElement('p');
     status.textContent = 'สถานะ: ' + (record.status || 'ไม่ระบุ');
     status.className = 'status-label';
 
@@ -1030,9 +1046,9 @@ function renderRepairRecords() {
       status.classList.add('completed');
     }
 
+    const problem = document.createElement('p');
     problem.textContent =
       'รายละเอียดปัญหา: ' + (record.problem || '-');
-
     problem.className = 'repair-problem';
 
     item.append(
@@ -1046,6 +1062,116 @@ function renderRepairRecords() {
       urgency,
       status
     );
+
+    // เครื่องมือจัดการสถานะสำหรับแอดมินเท่านั้น
+    if (isAdminUser) {
+      const control = document.createElement('div');
+      control.className = 'status-control';
+
+      const controlLabel = document.createElement('label');
+      controlLabel.textContent = 'ปรับปรุงสถานะ:';
+
+      const select = document.createElement('select');
+      select.className = 'status-select';
+
+      const allowedStatuses = [
+        'รอดำเนินการ',
+        'กำลังซ่อม',
+        'ซ่อมเสร็จแล้ว'
+      ];
+
+      allowedStatuses.forEach(function(value) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+
+        if (value === record.status) {
+          option.selected = true;
+        }
+
+        select.appendChild(option);
+      });
+
+      const saveButton = document.createElement('button');
+      saveButton.type = 'button';
+      saveButton.className = 'status-save-btn';
+      saveButton.textContent = 'บันทึกสถานะ';
+
+      const resultMessage = document.createElement('p');
+      resultMessage.className = 'status-result';
+
+      saveButton.addEventListener('click', async function() {
+        const newStatus = select.value;
+
+        if (newStatus === record.status) {
+          resultMessage.textContent = 'สถานะยังไม่มีการเปลี่ยนแปลง';
+          resultMessage.className = 'status-result';
+          return;
+        }
+
+        if (!adminIdToken) {
+          resultMessage.textContent =
+            'กรุณาเข้าสู่ระบบผู้ดูแลระบบใหม่';
+          resultMessage.className = 'status-result error';
+          return;
+        }
+
+        saveButton.disabled = true;
+        select.disabled = true;
+        saveButton.textContent = 'กำลังบันทึก...';
+
+        resultMessage.textContent = '';
+
+        try {
+          const result = await callRepairAPI({
+            action: 'updateRepairStatus',
+            repairId: record.repairId,
+            status: newStatus,
+            idToken: adminIdToken
+          });
+
+          if (!result.success) {
+            throw new Error(
+              result.message || 'ไม่สามารถอัปเดตสถานะได้'
+            );
+          }
+
+          // อัปเดตข้อมูลในหน่วยความจำ
+          record.status = newStatus;
+
+          resultMessage.className = 'status-result success';
+          resultMessage.textContent =
+            result.message || 'อัปเดตสถานะเรียบร้อยแล้ว';
+
+          if (result.reporterNotification) {
+            resultMessage.textContent +=
+              ' (' + result.reporterNotification + ')';
+          }
+
+          // แสดงสถานะใหม่ในการ์ด
+          renderRepairRecords();
+
+        } catch (error) {
+          resultMessage.className = 'status-result error';
+          resultMessage.textContent =
+            'บันทึกไม่สำเร็จ: ' + error.message;
+
+          saveButton.disabled = false;
+          select.disabled = false;
+          saveButton.textContent = 'บันทึกสถานะ';
+        }
+      });
+
+      controlLabel.appendChild(select);
+
+      control.append(
+        controlLabel,
+        saveButton,
+        resultMessage
+      );
+
+      item.appendChild(control);
+    }
 
     list.appendChild(item);
   });
@@ -1260,6 +1386,10 @@ async function handleGoogleCredential(response) {
     // เก็บ token ไว้ในหน่วยความจำของหน้าเว็บ
     adminIdToken = response.credential;
     isAdminUser = true;
+
+    if (recordsLoaded) {
+  renderRepairRecords();
+}
 
     message.className = 'success';
     message.textContent = 'เข้าสู่ระบบผู้ดูแลระบบสำเร็จ';
