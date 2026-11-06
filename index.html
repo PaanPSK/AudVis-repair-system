@@ -6,9 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    :root {
+      /* RMUTR Red Theme */
+      --brand-red: #B5121B;
+      --brand-red-dark: #8F1019;
+      --brand-red-soft: #FCEBEC;
+      --brand-red-pale: #FFF7F7;
+      --brand-red-border: #E8BFC2;
+      --brand-red-line: #D9A0A5;
+      --brand-red-focus: #F2A6AC;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f1f5f9;
+      background: #f8f5f5;
       color: #263445;
       margin: 0;
       padding: 32px 16px;
@@ -24,7 +35,7 @@
     }
 
     h1 {
-      color: #176b67;
+      color: var(--brand-red);
       font-size: 25px;
     }
 
@@ -32,6 +43,7 @@
       line-height: 1.7;
       color: #64748b;
     }
+
     label {
       display: block;
       margin-bottom: 8px;
@@ -46,21 +58,27 @@
       border-radius: 8px;
       font-size: 16px;
     }
+
     button {
       margin-top: 16px;
       padding: 12px 20px;
       border: none;
       border-radius: 8px;
-      background: #176b67;
+      background: var(--brand-red);
       color: white;
       font-size: 16px;
       cursor: pointer;
     }
 
+    button:hover {
+      background: var(--brand-red-dark);
+    }
+
     button:disabled {
       opacity: 0.6;
-      cursor: wait;
-    }    
+      cursor: not-allowed;
+    }
+
     textarea {
       box-sizing: border-box;
       width: 100%;
@@ -71,6 +89,7 @@
       font-family: inherit;
       resize: vertical;
     }
+
     select {
       box-sizing: border-box;
       width: 100%;
@@ -81,638 +100,645 @@
       font-family: inherit;
       background: white;
     }
-#message {
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 8px;
-  overflow-wrap: anywhere;
-}
-
-#message:empty {
-  display: none;
-}
-
-#message.success {
-  color: #166534;
-  background: #dcfce7;
-}
-
-#message.error {
-  color: #991b1b;
-  background: #fee2e2;
-}
-
-/* พื้นที่รายการแจ้งซ่อม */
-#recordsSection {
-  margin-top: 0;
-}
-
-#recordsSection h2 {
-  margin-bottom: 12px;
-  color: #1f2937;
-  font-size: 20px;
-}
-
-.records-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.records-header h2 {
-  margin: 0;
-}
-
-#toggleRecordsBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 210px;
-  min-height: 46px;
-  box-sizing: border-box;
-  margin-top: 0;
-  padding: 10px 18px;
-  border: 1px solid #176D68;
-  border-radius: 8px;
-  background: #176D68;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-#toggleRecordsBtn:hover {
-  background: #125752;
-}
-
-#toggleRecordsIcon {
-  font-size: 12px;
-  transition: transform 0.2s ease;
-}
-
-#toggleRecordsBtn[aria-expanded="true"] #toggleRecordsIcon {
-  transform: rotate(180deg);
-}
-
-.section-description {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: #64748b;
-  font-size: 16px;
-}
-
-hr {
-  margin-top: 24px;
-  margin-bottom: 15px;
-  border: 0;
-  border-top: 2px solid #94a3b8;
-}
-
-/* ปุ่มดูรายการ */
-#loadRecordsBtn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-#loadRecordsBtn:hover {
-  background: #1d4ed8;
-}
-
-#loadRecordsBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-/* กล่องรายการทั้งหมด */
-#recordsList {
-  display: grid;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.repair-item {
-  padding: 20px;
-  border: 1px solid #dbe7e6;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 3px 10px rgba(23, 107, 103, 0.06);
-  overflow-wrap: anywhere;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.repair-item:hover {
-  border-color: #a8cfcb;
-  box-shadow: 0 5px 14px rgba(23, 107, 103, 0.10);
-}
-
-.repair-item h3 {
-  margin: 0 0 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #A8CFCA;
-  color: #176b67;
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.repair-item p {
-  margin: 10px 0;
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-/* รายละเอียดปัญหา */
-.repair-item .repair-problem {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-left: 3px solid #A8CFCA;
-  border-radius: 6px;
-  background: #F4FAF9;
-  color: #334155;
-  overflow-wrap: anywhere;
-}
-
-#assetHistoryList .repair-item {
-  margin-bottom: 16px;
-}
-
-/* ข้อความแจ้งผลการเปลี่ยนสถานะ */
-.status-message:empty {
-  display: none;
-}
-
-.status-message {
-  margin: 8px 0 0;
-  padding: 10px 12px;
-  border-left: 3px solid #A8CFCA;
-  border-radius: 6px;
-  background: #F4FAF9;
-  color: #176D68;
-  font-size: 14px;
-}
-
-/* ข้อความแจ้งผล */
-#recordsMessage {
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-#recordsMessage.error {
-  color: #dc2626;
-}
-
-/* ป้ายสถานะ */
-.status-label,
-.urgency-label {
-  display: inline-block;
-  width: fit-content;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* สถานะ: รับเรื่องแล้ว */
-.status-label {
-  color: #176D68;
-  background: #E5F3F1;
-  border: 1px solid #A8CFCA;
-}
-
-/* รอดำเนินการ */
-.status-label.pending {
-  color: #92400e;
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-}
-
-/* กำลังซ่อม */
-.status-label.in-progress {
-  color: #1d4ed8;
-  background: #dbeafe;
-  border: 1px solid #93c5fd;
-}
-
-/* ซ่อมเสร็จแล้ว */
-.status-label.completed {
-  color: #166534;
-  background: #dcfce7;
-  border: 1px solid #86efac;
-}
-
-/* ความเร่งด่วน: ปกติ */
-.urgency-label {
-  color: #475569;
-  background: #f1f5f9;
-}
-
-/* ความเร่งด่วน: เร่งด่วน */
-.urgency-label.urgent {
-  color: #92400e;
-  background: #fef3c7;
-}
-
-/* ความเร่งด่วน: เร่งด่วนมาก */
-.urgency-label.very-urgent {
-  color: #b91c1c;
-  background: #fee2e2;
-}
-
-/* พื้นที่จัดการสถานะ */
-.status-control {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-/* ช่องเลือกสถานะ */
-.status-select {
-  width: auto;
-  min-width: 160px;
-  padding: 9px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #263445;
-  font-size: 14px;
-  font-family: inherit;
-}
-
-/* ปุ่มบันทึกสถานะ */
-.status-save-btn {
-  min-height: 40px;
-  margin-top: 0;
-  padding: 9px 16px;
-  border: 1px solid #176D68;
-  border-radius: 8px;
-  background: #176D68;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.status-save-btn:hover {
-  background: #125752;
-}
-
-.status-save-btn:disabled,
-.status-select:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* มือถือ */
-@media (max-width: 600px) {
-  .status-control {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .status-select,
-  .status-save-btn {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-/* รูปแบบพื้นฐานของปุ่ม */
-#submitBtn,
-#loadRecordsBtn,
-#clearSearchBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  box-sizing: border-box;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.4;
-  cursor: pointer;
-  transition: background-color 0.2s ease,
-              border-color 0.2s ease;
-}
-
-/* ปุ่มหลัก: ส่งข้อมูลและดูรายการ */
-#submitBtn,
-#loadRecordsBtn {
-  border: 1px solid #176D68;
-  background: #176D68;
-  color: #FFFFFF;
-}
-
-#submitBtn:hover,
-#loadRecordsBtn:hover {
-  background: #125752;
-  border-color: #125752;
-}
-
-/* ปุ่มรอง: ล้างคำค้นหา */
-#clearSearchBtn {
-  border: 1px solid #B8DCD8;
-  background: #E5F3F1;
-  color: #176D68;
-}
-
-#clearSearchBtn:hover {
-  background: #D2EAE6;
-  border-color: #8FC7C0;
-}
-
-/* สถานะโฟกัสสำหรับการใช้คีย์บอร์ด */
-#submitBtn:focus-visible,
-#loadRecordsBtn:focus-visible,
-#clearSearchBtn:focus-visible {
-  outline: 3px solid #93C5FD;
-  outline-offset: 2px;
-}
-
-/* ปุ่มระหว่างดำเนินการ */
-#submitBtn:disabled,
-#loadRecordsBtn:disabled,
-#clearSearchBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* รองรับหน้าจอมือถือ */
-@media (max-width:600px) {
-  body {
-    padding: 16px 10px;
-  }
-
-  .card {
-    padding: 20px 16px;
-    border-radius: 12px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  .repair-item {
-    padding: 16px;
-  }
-
-  .repair-item h3 {
-    font-size: 16px;
-  }
-
-  .repair-item p {
-    font-size: 14px;
-  }
-}
-
-/* จัดวางช่องค้นหา */
-.search-box {
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-box input {
-  flex: 1;
-  min-width: 0;
-}
-
-/* ปุ่มล้างคำค้นหา */
-#clearSearchBtn {
-  flex-shrink: 0;
-  margin-top: 0;
-}
-
-/* ปรับแถวค้นหาบนมือถือ */
-@media (max-width: 600px) {
-  .search-box {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  #clearSearchBtn {
-    width: 100%;
-  }
-}
-
-#assetHistoryInput {
-  height: 44px;
-  box-sizing: border-box;
-}
-
-#searchAssetHistoryBtn {
-  margin-top: 0;
-  min-height: 44px;
-  box-sizing: border-box;
-  border: 1px solid #176D68;
-  background: #176D68;
-  color: #FFFFFF;
-  transition: background-color 0.2s ease,
-              border-color 0.2s ease;
-}
-
-#searchAssetHistoryBtn:hover {
-  background: #125752;
-  border-color: #125752;
-}
-
-#searchAssetHistoryBtn:focus-visible,
-#toggleRecordsBtn:focus-visible {
-  outline: 3px solid #93C5FD;
-  outline-offset: 2px;
-}
-
-.required-mark {
-  color: #dc2626;
-  font-weight: bold;
-}
-
-.required-note {
-  color: #dc2626;
-}
-
-    
-/* ข้อความแจ้งสถานะการค้นหา */
-#assetHistoryMessage {
-  margin: 14px 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-#assetHistoryMessage.loading {
-  color: #64748b;
-}
-
-#assetHistoryMessage.success {
-  color: #15803d;
-  font-weight: 600;
-}
-
-#assetHistoryMessage.empty {
-  color: #64748b;
-}
-
-#assetHistoryMessage.error {
-  color: #dc2626;
-  font-weight: 600;
-}
-
-/* สถานะปุ่มขณะกำลังค้นหา */
-button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-    
-/* ข้อความแจ้งสถานะรายการแจ้งซ่อม */
-#recordsMessage {
-  margin: 14px 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-#recordsMessage.success {
-  color: #15803d;
-  font-weight: 600;
-}
-
-#recordsMessage.empty {
-  color: #64748b;
-}
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid var(--brand-red-focus);
+      outline-offset: 1px;
+      border-color: var(--brand-red);
+    }
+
+    #message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    #message:empty {
+      display: none;
+    }
+
+    #message.success {
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    #message.error {
+      color: #991b1b;
+      background: #fee2e2;
+    }
+
+    /* พื้นที่รายการแจ้งซ่อม */
+    #recordsSection {
+      margin-top: 0;
+    }
+
+    #recordsSection h2 {
+      margin-bottom: 12px;
+      color: #1f2937;
+      font-size: 20px;
+    }
+
+    .records-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .records-header h2 {
+      margin: 0;
+    }
+
+    #toggleRecordsBtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 210px;
+      min-height: 46px;
+      box-sizing: border-box;
+      margin-top: 0;
+      padding: 10px 18px;
+      border: 1px solid var(--brand-red);
+      border-radius: 8px;
+      background: var(--brand-red);
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    #toggleRecordsBtn:hover {
+      background: var(--brand-red-dark);
+    }
+
+    #toggleRecordsIcon {
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    #toggleRecordsBtn[aria-expanded="true"] #toggleRecordsIcon {
+      transform: rotate(180deg);
+    }
+
+    .section-description {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    hr {
+      margin-top: 24px;
+      margin-bottom: 15px;
+      border: 0;
+      border-top: 2px solid var(--brand-red-border);
+    }
+
+    /* ปุ่มดูรายการ */
+    #loadRecordsBtn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--brand-red);
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #loadRecordsBtn:hover {
+      background: var(--brand-red-dark);
+    }
+
+    #loadRecordsBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* กล่องรายการทั้งหมด */
+    #recordsList {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .repair-item {
+      padding: 20px;
+      border: 1px solid #ead6d8;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 3px 10px rgba(181, 18, 27, 0.06);
+      overflow-wrap: anywhere;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .repair-item:hover {
+      border-color: var(--brand-red-border);
+      box-shadow: 0 5px 14px rgba(181, 18, 27, 0.10);
+    }
+
+    .repair-item h3 {
+      margin: 0 0 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--brand-red-border);
+      color: var(--brand-red);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .repair-item p {
+      margin: 10px 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* รายละเอียดปัญหา */
+    .repair-item .repair-problem {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--brand-red-line);
+      border-radius: 6px;
+      background: var(--brand-red-pale);
+      color: #334155;
+      overflow-wrap: anywhere;
+    }
+
+    #assetHistoryList .repair-item {
+      margin-bottom: 16px;
+    }
+
+    /* ข้อความแจ้งผลการเปลี่ยนสถานะ */
+    .status-message:empty {
+      display: none;
+    }
+
+    .status-message {
+      margin: 8px 0 0;
+      padding: 10px 12px;
+      border-left: 3px solid var(--brand-red-line);
+      border-radius: 6px;
+      background: var(--brand-red-pale);
+      color: var(--brand-red-dark);
+      font-size: 14px;
+    }
+
+    /* ข้อความแจ้งผล */
+    #recordsMessage {
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    #recordsMessage.error {
+      color: #dc2626;
+    }
+
+    /* ป้ายสถานะ */
+    .status-label,
+    .urgency-label {
+      display: inline-block;
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* สถานะ: รับเรื่องแล้ว */
+    .status-label {
+      color: var(--brand-red-dark);
+      background: var(--brand-red-soft);
+      border: 1px solid var(--brand-red-border);
+    }
+
+    /* รอดำเนินการ */
+    .status-label.pending {
+      color: #92400e;
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+    }
+
+    /* กำลังซ่อม */
+    .status-label.in-progress {
+      color: #1d4ed8;
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
+    }
+
+    /* ซ่อมเสร็จแล้ว */
+    .status-label.completed {
+      color: #166534;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+    }
+
+    /* ความเร่งด่วน: ปกติ */
+    .urgency-label {
+      color: #475569;
+      background: #f1f5f9;
+    }
+
+    /* ความเร่งด่วน: เร่งด่วน */
+    .urgency-label.urgent {
+      color: #92400e;
+      background: #fef3c7;
+    }
+
+    /* ความเร่งด่วน: เร่งด่วนมาก */
+    .urgency-label.very-urgent {
+      color: #b91c1c;
+      background: #fee2e2;
+    }
+
+    /* พื้นที่จัดการสถานะ */
+    .status-control {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    /* ช่องเลือกสถานะ */
+    .status-select {
+      width: auto;
+      min-width: 160px;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #263445;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    /* ปุ่มบันทึกสถานะ */
+    .status-save-btn {
+      min-height: 40px;
+      margin-top: 0;
+      padding: 9px 16px;
+      border: 1px solid var(--brand-red);
+      border-radius: 8px;
+      background: var(--brand-red);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .status-save-btn:hover {
+      background: var(--brand-red-dark);
+    }
+
+    .status-save-btn:disabled,
+    .status-select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* มือถือ */
+    @media (max-width: 600px) {
+      .status-control {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .status-select,
+      .status-save-btn {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+
+    /* รูปแบบพื้นฐานของปุ่ม */
+    #submitBtn,
+    #loadRecordsBtn,
+    #clearSearchBtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      box-sizing: border-box;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: background-color 0.2s ease,
+                  border-color 0.2s ease;
+    }
+
+    /* ปุ่มหลัก: ส่งข้อมูลและดูรายการ */
+    #submitBtn,
+    #loadRecordsBtn {
+      border: 1px solid var(--brand-red);
+      background: var(--brand-red);
+      color: #FFFFFF;
+    }
+
+    #submitBtn:hover,
+    #loadRecordsBtn:hover {
+      background: var(--brand-red-dark);
+      border-color: var(--brand-red-dark);
+    }
+
+    /* ปุ่มรอง: ล้างคำค้นหา */
+    #clearSearchBtn {
+      border: 1px solid var(--brand-red-border);
+      background: var(--brand-red-soft);
+      color: var(--brand-red-dark);
+    }
+
+    #clearSearchBtn:hover {
+      background: #F6DADD;
+      border-color: var(--brand-red-line);
+    }
+
+    /* สถานะโฟกัสสำหรับการใช้คีย์บอร์ด */
+    #submitBtn:focus-visible,
+    #loadRecordsBtn:focus-visible,
+    #clearSearchBtn:focus-visible {
+      outline: 3px solid var(--brand-red-focus);
+      outline-offset: 2px;
+    }
+
+    /* ปุ่มระหว่างดำเนินการ */
+    #submitBtn:disabled,
+    #loadRecordsBtn:disabled,
+    #clearSearchBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* รองรับหน้าจอมือถือ */
+    @media (max-width:600px) {
+      body {
+        padding: 16px 10px;
+      }
+
+      .card {
+        padding: 20px 16px;
+        border-radius: 12px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .repair-item {
+        padding: 16px;
+      }
+
+      .repair-item h3 {
+        font-size: 16px;
+      }
+
+      .repair-item p {
+        font-size: 14px;
+      }
+    }
+
+    /* จัดวางช่องค้นหา */
+    .search-box {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-box input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ปุ่มล้างคำค้นหา */
+    #clearSearchBtn {
+      flex-shrink: 0;
+      margin-top: 0;
+    }
+
+    /* ปรับแถวค้นหาบนมือถือ */
+    @media (max-width: 600px) {
+      .search-box {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      #clearSearchBtn {
+        width: 100%;
+      }
+    }
+
+    #assetHistoryInput {
+      height: 44px;
+      box-sizing: border-box;
+    }
+
+    #searchAssetHistoryBtn {
+      margin-top: 0;
+      min-height: 44px;
+      box-sizing: border-box;
+      border: 1px solid var(--brand-red);
+      background: var(--brand-red);
+      color: #FFFFFF;
+      transition: background-color 0.2s ease,
+                  border-color 0.2s ease;
+    }
+
+    #searchAssetHistoryBtn:hover {
+      background: var(--brand-red-dark);
+      border-color: var(--brand-red-dark);
+    }
+
+    #searchAssetHistoryBtn:focus-visible,
+    #toggleRecordsBtn:focus-visible {
+      outline: 3px solid var(--brand-red-focus);
+      outline-offset: 2px;
+    }
+
+    .required-mark {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .required-note {
+      color: #dc2626;
+    }
+
+    /* ข้อความแจ้งสถานะการค้นหา */
+    #assetHistoryMessage {
+      margin: 14px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #assetHistoryMessage.loading {
+      color: #64748b;
+    }
+
+    #assetHistoryMessage.success {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    #assetHistoryMessage.empty {
+      color: #64748b;
+    }
+
+    #assetHistoryMessage.error {
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    /* สถานะปุ่มขณะกำลังค้นหา */
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* ข้อความแจ้งสถานะรายการแจ้งซ่อม */
+    #recordsMessage {
+      margin: 14px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #recordsMessage.success {
+      color: #15803d;
+      font-weight: 600;
+    }
+
+    #recordsMessage.empty {
+      color: #64748b;
+    }
 
     .status-result {
-  margin: 10px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
-.status-result.success {
-  color: #15803d;
-  font-weight: 600;
-}
+    .status-result.success {
+      color: #15803d;
+      font-weight: 600;
+    }
 
-.status-result.error {
-  color: #dc2626;
-  font-weight: 600;
-}
+    .status-result.error {
+      color: #dc2626;
+      font-weight: 600;
+    }
 
-.status-control label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
+    .status-control label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
 
     /* ==============================
-   Admin Login Section
-============================== */
+       Admin Login Section
+    ============================== */
 
-#adminLoginSection {
-  margin: 0 0 24px;
-}
+    #adminLoginSection {
+      margin: 0 0 24px;
+    }
 
-#adminLoginSection h2 {
-  margin: 0 0 12px;
-  line-height: 1.5;
-}
+    #adminLoginSection h2 {
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
 
-#adminMessage {
-  margin: 0 0 12px;
-  font-size: 14px;
-  line-height: 1.6;
-}
+    #adminMessage {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
-#adminLoginSection .g_id_signin {
-  margin: 0;
-}
+    #adminLoginSection .g_id_signin {
+      margin: 0;
+    }
 
+    /* ==============================
+       Admin Status Controls
+    ============================== */
 
-/* ==============================
-   Admin Status Controls
-============================== */
+    .status-control {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
 
-.status-control {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-}
+    .status-control label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-weight: 600;
+    }
 
-.status-control label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  font-weight: 600;
-}
+    .status-select,
+    .status-save-btn {
+      height: 42px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+    }
 
-.status-select,
-.status-save-btn {
-  height: 42px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 14px;
-}
+    .status-select {
+      min-width: 155px;
+      padding: 0 12px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      color: #263445;
+    }
 
-.status-select {
-  min-width: 155px;
-  padding: 0 12px;
-  border: 1px solid #cbd5e1;
-  background: white;
-  color: #263445;
-}
+    .status-save-btn {
+      padding: 0 18px;
+      border: 1px solid var(--brand-red);
+      background: var(--brand-red);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
-.status-save-btn {
-  padding: 0 18px;
-  border: none;
-  background: #176f6b;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
+    .status-save-btn:hover {
+      background: var(--brand-red-dark);
+    }
 
-.status-save-btn:hover {
-  background: #125c59;
-}
+    .status-save-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
 
-.status-save-btn:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.status-result {
-  flex-basis: 100%;
-}
+    .status-result {
+      flex-basis: 100%;
+    }
 
     /* ขนาดหัวข้อผู้ดูแลระบบให้เท่าหัวข้อหลักอื่น */
-#adminLoginSection h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  line-height: 1.5;
-}
+    #adminLoginSection h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
 
-/* ขนาดข้อความสถานะ Login ให้เท่าข้อความสถานะอื่น */
-#adminMessage {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.6;
-  margin: 0 0 12px;
-}
+    /* ขนาดข้อความสถานะ Login ให้เท่าข้อความสถานะอื่น */
+    #adminMessage {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin: 0 0 12px;
+    }
 
   </style>
 
@@ -836,7 +862,7 @@ button:disabled {
 
   <div
     id="g_id_onload"
-    data-client_id="552159582692-068bklo550i1u05cismdtvhm7nr7gk17.apps.googleusercontent.com"
+    data-client_id="552159582692-068bklo550i1u05cismdtvhm7nr7g17.apps.googleusercontent.com"
     data-callback="handleGoogleCredential"
     data-auto_prompt="false">
   </div>
@@ -922,7 +948,6 @@ button:disabled {
   <div id="assetHistoryList"></div>
 
 </section>
-
 
 </main>
 <script>
@@ -1174,27 +1199,27 @@ function renderRepairRecords() {
       select.className = 'status-select';
 
       const allowedStatuses = [
-  'รอดำเนินการ',
-  'กำลังซ่อม',
-  'ซ่อมเสร็จแล้ว'
-];
+        'รอดำเนินการ',
+        'กำลังซ่อม',
+        'ซ่อมเสร็จแล้ว'
+      ];
 
-// รองรับชื่อสถานะเดิมในข้อมูลเก่า
-const currentStatus = record.status === 'รับเรื่องแล้ว'
-  ? 'รอดำเนินการ'
-  : record.status;
+      // รองรับชื่อสถานะเดิมในข้อมูลเก่า
+      const currentStatus = record.status === 'รับเรื่องแล้ว'
+        ? 'รอดำเนินการ'
+        : record.status;
 
-allowedStatuses.forEach(function(value) {
-  const option = document.createElement('option');
-  option.value = value;
-  option.textContent = value;
+      allowedStatuses.forEach(function(value) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
 
-  if (value === currentStatus) {
-    option.selected = true;
-  }
+        if (value === currentStatus) {
+          option.selected = true;
+        }
 
-  select.appendChild(option);
-});
+        select.appendChild(option);
+      });
 
       const saveButton = document.createElement('button');
       saveButton.type = 'button';
@@ -1241,38 +1266,38 @@ allowedStatuses.forEach(function(value) {
           }
 
           // อัปเดตข้อมูลในหน่วยความจำ
-record.status = newStatus;
+          record.status = newStatus;
 
-// อัปเดตข้อความสถานะบนการ์ดเดิม
-status.textContent = 'สถานะ: ' + newStatus;
+          // อัปเดตข้อความสถานะบนการ์ดเดิม
+          status.textContent = 'สถานะ: ' + newStatus;
 
-status.classList.remove(
-  'pending',
-  'in-progress',
-  'completed'
-);
+          status.classList.remove(
+            'pending',
+            'in-progress',
+            'completed'
+          );
 
-if (newStatus === 'รอดำเนินการ') {
-  status.classList.add('pending');
-} else if (newStatus === 'กำลังซ่อม') {
-  status.classList.add('in-progress');
-} else if (newStatus === 'ซ่อมเสร็จแล้ว') {
-  status.classList.add('completed');
-}
+          if (newStatus === 'รอดำเนินการ') {
+            status.classList.add('pending');
+          } else if (newStatus === 'กำลังซ่อม') {
+            status.classList.add('in-progress');
+          } else if (newStatus === 'ซ่อมเสร็จแล้ว') {
+            status.classList.add('completed');
+          }
 
-// แสดงข้อความแจ้งผลโดยไม่สร้างการ์ดใหม่
-resultMessage.className = 'status-result success';
-resultMessage.textContent =
-  result.message || 'อัปเดตสถานะเรียบร้อยแล้ว';
+          // แสดงข้อความแจ้งผลโดยไม่สร้างการ์ดใหม่
+          resultMessage.className = 'status-result success';
+          resultMessage.textContent =
+            result.message || 'อัปเดตสถานะเรียบร้อยแล้ว';
 
-if (result.reporterNotification) {
-  resultMessage.textContent +=
-    ' (' + result.reporterNotification + ')';
-}
+          if (result.reporterNotification) {
+            resultMessage.textContent +=
+              ' (' + result.reporterNotification + ')';
+          }
 
-saveButton.textContent = 'บันทึกสถานะ';
-saveButton.disabled = false;
-select.disabled = false;
+          saveButton.textContent = 'บันทึกสถานะ';
+          saveButton.disabled = false;
+          select.disabled = false;
 
         } catch (error) {
           resultMessage.className = 'status-result error';
@@ -1501,18 +1526,18 @@ async function handleGoogleCredential(response) {
     });
 
     if (!result.success || !result.isAdmin) {
-  throw new Error(
-    result.message || 'บัญชี Google นี้ไม่มีสิทธิ์ผู้ดูแลระบบ'
-  );
-}
+      throw new Error(
+        result.message || 'บัญชี Google นี้ไม่มีสิทธิ์ผู้ดูแลระบบ'
+      );
+    }
 
     // เก็บ token ไว้ในหน่วยความจำของหน้าเว็บ
     adminIdToken = response.credential;
     isAdminUser = true;
 
     if (recordsLoaded) {
-  renderRepairRecords();
-}
+      renderRepairRecords();
+    }
 
     message.className = 'success';
     message.textContent = 'เข้าสู่ระบบผู้ดูแลระบบสำเร็จ';
